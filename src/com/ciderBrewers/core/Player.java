@@ -8,13 +8,13 @@ public class Player {
     private int yDir;
     private int scores;
     private SpriteSheet playerSprite;
-    private Animation playerAnimation;
+    public Animation playerAnimation;
     private int position;
     private int orientation;
 
-    public Player(SpriteSheet playerSprite, int x, int y, int position) {
+    public Player(SpriteSheet playerSprite, int x, int position) {
         this.xDir = x;
-        this.yDir = y;
+        this.yDir = 200;
         scores = 0;
         this.playerSprite = playerSprite;
         this.playerAnimation = new Animation(playerSprite, 300);
@@ -24,6 +24,10 @@ public class Player {
         } else {
             this.orientation = -44;
         }
+    }
+
+    public int getPosition() {
+        return position;
     }
 
     public void draw() {
