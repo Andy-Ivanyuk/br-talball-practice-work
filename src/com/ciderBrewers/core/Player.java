@@ -3,59 +3,45 @@ package com.ciderBrewers.core;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SpriteSheet;
 
-public class Player {
-    private int xDir;
-    private int yDir;
-    private int scores;
-    private SpriteSheet playerSprite;
-    public Animation playerAnimation;
-    private int position;
-    private int orientation;
+class Player extends GenericObject {
+    int nextStep = 0;
+    private float stepMultiplier = 0.2f;
+    private Animation playerAnimation;
+    private int score = 0;
 
-    public Player(SpriteSheet playerSprite, int x, int position) {
-        this.xDir = x;
-        this.yDir = 200;
-        scores = 0;
-        this.playerSprite = playerSprite;
-        this.playerAnimation = new Animation(playerSprite, 300);
-        this.position = position;
-        if (position == 0) {
-            this.orientation = 44;
+    Player(SpriteSheet spriteSheet) {
+        this.playerAnimation = new Animation(spriteSheet, 300);
+    }
+
+    void update(int delta) {
+        if (nextStep != 0) {
+            playerAnimation.start();
+            playerAnimation.update(delta);
+            float deltaX = nextStep * stepMultiplier * delta;
+            setX(checkStep(deltaX));
+            nextStep = 0;
         } else {
-            this.orientation = -44;
+            playerAnimation.stop();
         }
     }
 
-    public int getPosition() {
-        return position;
+    void draw() {
+        int side = 1;
+        if (getX() < SharedData.SCREEN_WIDTH / 2) side = -1;
+        playerAnimation.draw(
+                getX() - (playerAnimation.getWidth() * SharedData.PLAYER_SCALE / 2) * side,
+                getY() - playerAnimation.getHeight() * SharedData.PLAYER_SCALE,
+                playerAnimation.getWidth() * SharedData.PLAYER_SCALE * side,
+                playerAnimation.getHeight() * SharedData.PLAYER_SCALE);
     }
 
-    public void draw() {
-        playerAnimation.draw(xDir, yDir, orientation, 123);
-    }
-
-    public double getXDir() {
-        return xDir;
-    }
-    public void setXDir(int xDir) {
-        this.xDir += xDir;
-    }
-    public double getYDir() {
-        return yDir;
-    }
-    public void setYDir(int yDir) {
-        this.yDir += yDir;
-    }
-    public int getScores() {
-        return scores;
-    }
-    public void setScores(int scores) {
-        this.scores = scores;
-    }
-    public SpriteSheet getPlayerSprite() {
-        return playerSprite;
-    }
-    public void setPlayerSprite(SpriteSheet playerSprite) {
-        this.playerSprite = playerSprite;
+    private float checkStep(float deltaX) {
+        if (getX() + deltaX - playerAnimation.getWidth() * SharedData.PLAYER_SCALE / 2 <= 0) {
+            return playerAnimation.getWidth() * SharedData.PLAYER_SCALE / 2;
+        }
+        if (getX() + deltaX + playerAnimation.getWidth() * SharedData.PLAYER_SCALE / 2 >= SharedData.SCREEN_WIDTH) {
+            return SharedData.SCREEN_WIDTH - playerAnimation.getWidth() * SharedData.PLAYER_SCALE / 2;
+        }
+        return getX() + deltaX;
     }
 }
