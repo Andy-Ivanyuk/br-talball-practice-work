@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 public class VolleyballGame extends BasicGame {
 
     private Controller con1, con2;
+    private Ball ball;
 
     private VolleyballGame(String title) {
         super(title);
@@ -26,20 +27,23 @@ public class VolleyballGame extends BasicGame {
     }
 
     @Override
-    public void init(GameContainer c) throws SlickException {
-        con1 = new Controller(new Player(new SpriteSheet("data/spr/NPCp.png", SharedData.PLAYER_WIDTH, SharedData.PLAYER_HEIGHT)), 0);
-        con2 = new Controller(new Player(new SpriteSheet("data/spr/NPCp.png", SharedData.PLAYER_WIDTH, SharedData.PLAYER_HEIGHT)), 1);
+    public void init(GameContainer c) {
+        con1 = new Controller(new Player(SpriteSheets.getInstance().PLAYER_SPRITE), 0);
+        con2 = new Controller(new Player(SpriteSheets.getInstance().PLAYER_SPRITE), 1);
+        ball = new Ball(SpriteSheets.getInstance().BALL_SPRITE);
     }
 
     @Override
     public void update(GameContainer c, int delta) {
         con1.update(c, delta);
         con2.update(c, delta);
+        ball.update(delta);
     }
 
     @Override
     public void render(GameContainer c, Graphics g) {
         con1.draw();
         con2.draw();
+        ball.draw();
     }
 }
