@@ -7,9 +7,6 @@ import java.util.logging.Logger;
 
 public class VolleyballGame extends BasicGame {
 
-    private Controller con1, con2;
-    private Ball ball;
-
     private VolleyballGame(String title) {
         super(title);
     }
@@ -28,22 +25,33 @@ public class VolleyballGame extends BasicGame {
 
     @Override
     public void init(GameContainer c) {
-        con1 = new Controller(new Player(SpriteSheets.getInstance().PLAYER_SPRITE), 0);
-        con2 = new Controller(new Player(SpriteSheets.getInstance().PLAYER_SPRITE), 1);
-        ball = new Ball(SpriteSheets.getInstance().BALL_SPRITE);
+        Player player1 = new Player(SpriteSheets.getInstance().PLAYER_SPRITE);
+        Player player2 = new Player(SpriteSheets.getInstance().PLAYER_SPRITE);
+
+        Controller con1 = new Controller(player1, 0);
+        Controller con2 = new Controller(player2, 1);
+        Ball ball = new Ball(SpriteSheets.getInstance().BALL_SPRITE);
+
+        SharedData.getInstance().controllers.add(con1);
+        SharedData.getInstance().controllers.add(con2);
+        SharedData.getInstance().players.add(player1);
+        SharedData.getInstance().players.add(player2);
+        SharedData.getInstance().balls.add(ball);
     }
 
     @Override
     public void update(GameContainer c, int delta) {
-        con1.update(c, delta);
-        con2.update(c, delta);
-        ball.update(delta);
+        for (Controller controller : SharedData.getInstance().controllers) controller.update(c, delta);
+        for (PhysicsObject object : SharedData.getInstance().physicsObjects) object.update(c, delta);
+        for (Player object : SharedData.getInstance().players) object.update(c, delta);
+        for (Ball object : SharedData.getInstance().balls) object.update(c, delta);
     }
 
     @Override
     public void render(GameContainer c, Graphics g) {
-        con1.draw();
-        con2.draw();
-        ball.draw();
+        for (GenericObject object : SharedData.getInstance().genericObjects) object.draw();
+        for (PhysicsObject object : SharedData.getInstance().physicsObjects) object.draw();
+        for (Player object : SharedData.getInstance().players) object.draw();
+        for (Ball object : SharedData.getInstance().balls) object.draw();
     }
 }

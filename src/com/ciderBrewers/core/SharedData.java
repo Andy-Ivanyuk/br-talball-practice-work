@@ -1,6 +1,9 @@
 package com.ciderBrewers.core;
 
-public class SharedData {
+import java.util.ArrayList;
+import java.util.List;
+
+class SharedData {
     static final int SCREEN_WIDTH = 800;
     static final int SCREEN_HEIGHT = 600;
     static final float PLAYER_SCALE = 2f;
@@ -16,10 +19,16 @@ public class SharedData {
 
     private static SharedData INSTANCE = new SharedData();
 
+    List<Controller> controllers = new ArrayList<>();
+    List<GenericObject> genericObjects = new ArrayList<>();
+    List<PhysicsObject> physicsObjects = new ArrayList<>();
+    List<Player> players = new ArrayList<>();
+    List<Ball> balls = new ArrayList<>();
+
     private SharedData() {
     }
 
-    public static SharedData getInstance() {
+    static SharedData getInstance() {
         return (INSTANCE);
     }
 }

@@ -26,18 +26,7 @@ class Controller {
 
     void update(GameContainer c, int delta) {
         Input walkInput = c.getInput();
-        if (walkInput.isKeyDown(leftWalk)) {
-            player.nextStep -= 1;
-        }
-        if (walkInput.isKeyDown(rightWalk)) {
-            player.nextStep += 1;
-        }
-
-        player.update(delta);
+        if (walkInput.isKeyDown(leftWalk)) player.nextStep -= 1;
+        if (walkInput.isKeyDown(rightWalk)) player.nextStep += 1;
     }
-
-    void draw() {
-        player.draw();
-    }
-
 }

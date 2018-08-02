@@ -2,19 +2,39 @@ package com.ciderBrewers.core;
 
 import org.newdawn.slick.Animation;
 
+import java.awt.*;
+
 class GenericObject {
     private float x = 0;
     private float y = 0;
+    private float rotation = 0;
+    private boolean reversed = false;
     private Animation sprite;
     private float originX = 0;
     private float originY = 0;
     private float scale = 1f;
+    private boolean isSolid = false;
+    private Rectangle collider;
 
     GenericObject() {
     }
 
-    void draw(boolean reversed) {
+    // Sync collider coordinates and clamp rotation angle
+    void update() {
+        collider.x = new Float(x).intValue();
+        collider.y = new Float(y).intValue();
+
+        if (getRotation() < 0) setRotation(getRotation() + 360);
+        if (getRotation() >= 360) setRotation(getRotation() - 360);
+    }
+
+    // Draw object's sprite
+    void draw() {
         int side = reversed ? 1 : -1;
+
+        if (reversed) getSprite().getCurrentFrame().setCenterOfRotation(originX * scale, originY * scale);
+        else getSprite().getCurrentFrame().setCenterOfRotation(-originX * scale, originY * scale);
+        getSprite().getCurrentFrame().setRotation(rotation);
         getSprite().draw(
                 getX() - getOriginX() * scale * side,
                 getY() - getOriginY() * scale,
@@ -38,6 +58,22 @@ class GenericObject {
         this.y = y;
     }
 
+    float getRotation() {
+        return rotation;
+    }
+
+    void setRotation(float rotation) {
+        this.rotation = rotation;
+    }
+
+    boolean isReversed() {
+        return reversed;
+    }
+
+    void setReversed(boolean reversed) {
+        this.reversed = reversed;
+    }
+
     Animation getSprite() {
         return sprite;
     }
@@ -46,7 +82,7 @@ class GenericObject {
         this.sprite = sprite;
     }
 
-    private float getOriginX() {
+    float getOriginX() {
         return originX;
     }
 
@@ -54,7 +90,7 @@ class GenericObject {
         this.originX = originX;
     }
 
-    private float getOriginY() {
+    float getOriginY() {
         return originY;
     }
 
@@ -68,5 +104,21 @@ class GenericObject {
 
     void setScale(float scale) {
         this.scale = scale;
+    }
+
+    Rectangle getCollider() {
+        return collider;
+    }
+
+    void setCollider(Rectangle collider) {
+        this.collider = collider;
+    }
+
+    boolean isSolid() {
+        return isSolid;
+    }
+
+    void setSolid(boolean solid) {
+        isSolid = solid;
     }
 }

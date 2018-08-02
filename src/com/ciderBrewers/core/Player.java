@@ -1,7 +1,10 @@
 package com.ciderBrewers.core;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SpriteSheet;
+
+import java.awt.*;
 
 class Player extends GenericObject {
     int nextStep = 0;
@@ -14,9 +17,16 @@ class Player extends GenericObject {
         setOriginX((float) getSprite().getWidth() / 2);
         setOriginY(getSprite().getHeight() - 5);
         setScale(SharedData.PLAYER_SCALE);
+        setCollider(new Rectangle(
+                new Float(getX() - getOriginX() * getScale()).intValue(),
+                new Float(getY() - getOriginY() * getScale()).intValue(),
+                new Float(getSprite().getWidth() * getScale()).intValue(),
+                new Float(getSprite().getHeight() * getScale()).intValue()));
+        setSolid(true);
     }
 
-    void update(int delta) {
+    // Overriding update to process controller commands and calculate sprite facing
+    void update(GameContainer c, int delta) {
         if (nextStep != 0) {
             getSprite().start();
             getSprite().update(delta);
@@ -26,13 +36,16 @@ class Player extends GenericObject {
         } else {
             getSprite().stop();
         }
+
+        if (getX() < SharedData.SCREEN_WIDTH / 2) setReversed(false);
+        else setReversed(true);
+
+        // Todo: Fix this hardcoded piece of crap
+        getCollider().x = new Float(getX() - 4).intValue();
+        getCollider().y = new Float(getY() - getOriginY() * getScale() + 32).intValue();
     }
 
-    void draw() {
-        if (getX() < SharedData.SCREEN_WIDTH / 2) draw(false);
-        else draw(true);
-    }
-
+    // Calculate next step and return next player position
     private float checkStep(float deltaX) {
         if (getX() + deltaX - getSprite().getWidth() * getScale() / 2 <= 0) {
             return getSprite().getWidth() * getScale() / 2;
@@ -41,5 +54,18 @@ class Player extends GenericObject {
             return SharedData.SCREEN_WIDTH - getSprite().getWidth() * getScale() / 2;
         }
         return getX() + deltaX;
+    }
+
+    // Overriding drawing for debug collider drawing
+    void draw() {
+        /*
+        // Todo: Fix this hardcoded piece of crap
+        SpriteSheets.getInstance().DEBUG_SPRITE.draw(
+                getCollider().x - 32,
+                getCollider().y - 32,
+                getCollider().width,
+                getCollider().height);
+        */
+        super.draw();
     }
 }

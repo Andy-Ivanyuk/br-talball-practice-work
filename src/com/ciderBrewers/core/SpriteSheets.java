@@ -15,12 +15,16 @@ class SpriteSheets {
         }
     }
 
+    SpriteSheet DEBUG_SPRITE;
     SpriteSheet PLAYER_SPRITE;
     SpriteSheet BALL_SPRITE;
+    SpriteSheet FAT_SPRITE;
 
     private SpriteSheets() throws SlickException {
-        PLAYER_SPRITE = new SpriteSheet("data/spr/NPC.png", 44, 123);
+        DEBUG_SPRITE = new SpriteSheet("data/spr/debug.png", 1, 1);
+        PLAYER_SPRITE = new SpriteSheet("data/spr/player1.png", 36, 123);
         BALL_SPRITE = new SpriteSheet("data/spr/ball.png", 32, 32);
+        FAT_SPRITE = new SpriteSheet("data/spr/fat.png", 32, 32);
     }
 
     static SpriteSheets getInstance() {
