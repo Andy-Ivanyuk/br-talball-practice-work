@@ -33,15 +33,13 @@ public class Player extends PhysicsObject {
 
     // Overriding update to process controller commands and calculate sprite facing
     public void update(GameContainer c, int delta) {
-        super.update(c, delta);
-
         if (nextStep != 0) {
             if (isGrounded()) {
                 getSprite().start();
                 getSprite().update(delta);
             }
             float deltaX = nextStep * stepMultiplier * delta;
-            setX(checkStep(deltaX));
+            setX(getX() + deltaX);
             nextStep = 0;
         } else {
             if (isGrounded()) {
@@ -52,20 +50,7 @@ public class Player extends PhysicsObject {
         if (getX() - target.getX() < 0) setReversed(false);
         else setReversed(true);
 
-        // Todo: Fix this hardcoded piece of crap
-        //getCollider().x = new Float(getX() - 4).intValue();
-        //getCollider().y = new Float(getY() - getOriginY() * getScale() + 32).intValue();
-    }
-
-    // Calculate next step and return next player position
-    private float checkStep(float deltaX) {
-        if (getX() + deltaX - getSprite().getWidth() * getScale() / 2 <= 0) {
-            return getSprite().getWidth() * getScale() / 2;
-        }
-        if (getX() + deltaX + getSprite().getWidth() * getScale() / 2 >= SharedData.SCREEN_WIDTH) {
-            return SharedData.SCREEN_WIDTH - getSprite().getWidth() * getScale() / 2;
-        }
-        return getX() + deltaX;
+        super.update(c, delta);
     }
 
     // Check if player is on the ground

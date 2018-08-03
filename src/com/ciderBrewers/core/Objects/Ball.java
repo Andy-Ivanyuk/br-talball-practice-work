@@ -34,7 +34,7 @@ public class Ball extends PhysicsObject {
                 if (getX() - player.getX() < 0) direction = -1;
 
                 setSpeedX(getSpeedX() + SharedData.PLAYER_HORIZONTAL_FORCE * direction);
-                setSpeedY(getSpeedY() - SharedData.PLAYER_VERICAL_FORCE);
+                setSpeedY(getSpeedY() - SharedData.PLAYER_VERTICAL_FORCE);
             }
         }
         for (GenericObject object : SharedData.getInstance().genericObjects) {

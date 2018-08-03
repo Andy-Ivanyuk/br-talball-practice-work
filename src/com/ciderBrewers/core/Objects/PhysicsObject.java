@@ -23,19 +23,7 @@ public class PhysicsObject extends GenericObject {
 
         clampSpeed();
 
-        int collision = boundsCheck();
-
-        switch (collision) {
-            case 1: {
-                speedX = -speedX / friction;
-                break;
-            }
-            case 2: {
-                speedY = -speedY * bounce;
-                speedX /= friction;
-                break;
-            }
-        }
+        boundsCheck();
 
         setRotation(getRotation() + momentum * delta);
 
@@ -52,20 +40,20 @@ public class PhysicsObject extends GenericObject {
     }
 
     // Check if object is in bounds. If not - SNAP it BACK TO REALITY. OH, THERE GOES GRAVITY!
-    private int boundsCheck() {
-        if (getX() < 0) {
-            setX(0);
-            return 1;
+    private void boundsCheck() {
+        if (getX() - getOriginX() * getScale() < 0) {
+            setX(getOriginX() * getScale());
+            speedX = -speedX / friction;
         }
         if (getX() - getOriginX() * getScale() + getCollider().width > SharedData.SCREEN_WIDTH) {
             setX(SharedData.SCREEN_WIDTH - (float) getCollider().width + getOriginX() * getScale());
-            return 1;
+            speedX = -speedX / friction;
         }
         if (getY() - getOriginY() * getScale() + getCollider().height > SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET) {
             setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET - getCollider().height + getOriginY() * getScale());
-            return 2;
+            speedY = -speedY * bounce;
+            speedX /= friction;
         }
-        return 0;
     }
 
     float getSpeedX() {

@@ -16,19 +16,23 @@ public class SpriteSheets {
     }
 
     public SpriteSheet DEBUG_SPRITE;
+    public SpriteSheet DEBUG_BACKGROUND;
+
     public SpriteSheet PLAYER_SPRITE;
     public SpriteSheet BALL_SPRITE;
     public SpriteSheet FAT_SPRITE;
 
-    public SpriteSheet BK1_ANIM;
+    public SpriteSheet BG1_ANIM;
 
     private SpriteSheets() throws SlickException {
         DEBUG_SPRITE = new SpriteSheet("data/spr/debug.png", 1, 1);
+        DEBUG_BACKGROUND = new SpriteSheet("data/spr/bg_debug.png", 800, 600);
+
         PLAYER_SPRITE = new SpriteSheet("data/spr/player1.png", 36, 123);
         BALL_SPRITE = new SpriteSheet("data/spr/ball.png", 32, 32);
         FAT_SPRITE = new SpriteSheet("data/spr/fat.png", 32, 32);
 
-        BK1_ANIM = new SpriteSheet("data/spr/bk1_anim.png", 384, 256);
+        BG1_ANIM = new SpriteSheet("data/spr/bg1_anim.png", 384, 256);
     }
 
     public static SpriteSheets getInstance() {

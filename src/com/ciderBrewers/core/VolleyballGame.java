@@ -24,16 +24,15 @@ public class VolleyballGame extends StateBasedGame {
             AppGameContainer app;
             app = new AppGameContainer(new VolleyballGame("Totally Wicked Volleyball"));
             app.setDisplayMode(SharedData.SCREEN_WIDTH, SharedData.SCREEN_HEIGHT, false);
-            app.start();
-
             app.setAlwaysRender(true);
+            app.start();
         } catch (SlickException ex) {
             Logger.getLogger(VolleyballGame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public void initStatesList(GameContainer gameContainer) throws SlickException {
+    public void initStatesList(GameContainer gameContainer) {
         addState(new GameState());
     }
 }

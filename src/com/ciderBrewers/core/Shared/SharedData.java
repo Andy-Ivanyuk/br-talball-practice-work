@@ -24,7 +24,7 @@ public class SharedData {
     public static final float PLAYER_FRICTION = 1f;
     public static final float PLAYER_BOUNCE = 0f;
     public static final float PLAYER_HORIZONTAL_FORCE = 0.05f;
-    public static final float PLAYER_VERICAL_FORCE = 0.05f;
+    public static final float PLAYER_VERTICAL_FORCE = 0.05f;
 
     private static SharedData INSTANCE = new SharedData();
 

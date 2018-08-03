@@ -18,7 +18,7 @@ public class GameState extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) {
-        SharedData.getInstance().background = new ParallaxBackground(SpriteSheets.getInstance().BK1_ANIM);
+        SharedData.getInstance().background = new ParallaxBackground(SpriteSheets.getInstance().DEBUG_BACKGROUND);
 
         Ball ball = new Ball(SpriteSheets.getInstance().FAT_SPRITE);
 
