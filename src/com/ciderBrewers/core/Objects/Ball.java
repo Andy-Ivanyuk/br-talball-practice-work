@@ -18,8 +18,8 @@ public class Ball extends PhysicsObject {
         setOriginY((float) getSprite().getHeight() / 2);
         setScale(SharedData.BALL_SCALE);
         setCollider(new Rectangle(
-                new Float(getX()).intValue(),
-                new Float(getY()).intValue(),
+                new Float(getX() - getOriginX() * getScale()).intValue(),
+                new Float(getY() - getOriginX() * getScale()).intValue(),
                 new Float(getSprite().getWidth() * getScale()).intValue(),
                 new Float(getSprite().getHeight() * getScale()).intValue()));
         setSolid(true);
@@ -30,11 +30,16 @@ public class Ball extends PhysicsObject {
         // Check for player collision
         for (Player player : SharedData.getInstance().players) {
             if (getCollider().intersects(player.getCollider())) {
-                setSpeedX(getSpeedX() + (getX() - player.getX()) / 1000);
-                setSpeedY(getSpeedY() - 0.05f);
-                if (SharedData.getInstance().background != null) {
-                    SharedData.getInstance().background.getSprite().start();
-                }
+                int direction = 1;
+                if (getX() - player.getX() < 0) direction = -1;
+
+                setSpeedX(getSpeedX() + SharedData.PLAYER_HORIZONTAL_FORCE * direction);
+                setSpeedY(getSpeedY() - SharedData.PLAYER_VERICAL_FORCE);
+            }
+        }
+        for (GenericObject object : SharedData.getInstance().genericObjects) {
+            if (getCollider().intersects(object.getCollider())) {
+                setSpeedX(-getSpeedX());
             }
         }
 

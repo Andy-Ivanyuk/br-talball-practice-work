@@ -22,8 +22,8 @@ public class GenericObject {
 
     // Sync collider coordinates and clamp rotation angle
     void update() {
-        collider.x = new Float(x).intValue();
-        collider.y = new Float(y).intValue();
+        collider.x = new Float(x - originX * scale).intValue();
+        collider.y = new Float(y - originY * scale).intValue();
 
         if (getRotation() < 0) setRotation(getRotation() + 360);
         if (getRotation() >= 360) setRotation(getRotation() - 360);

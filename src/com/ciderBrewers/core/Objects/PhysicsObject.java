@@ -6,9 +6,11 @@ import org.newdawn.slick.GameContainer;
 public class PhysicsObject extends GenericObject {
     private float speedX = 0;
     private float speedY = 0;
-    private float maxSpeed = 0.5f;
+    private float maxSpeed = SharedData.MAX_SPEED;
     private float momentum = 0;
     private float weight = 1;
+    private float friction = SharedData.FRICTION;
+    private float bounce = SharedData.BOUNCE;
 
     PhysicsObject() {
     }
@@ -21,7 +23,19 @@ public class PhysicsObject extends GenericObject {
 
         clampSpeed();
 
-        boundsCheck();
+        int collision = boundsCheck();
+
+        switch (collision) {
+            case 1: {
+                speedX = -speedX / friction;
+                break;
+            }
+            case 2: {
+                speedY = -speedY * bounce;
+                speedX /= friction;
+                break;
+            }
+        }
 
         setRotation(getRotation() + momentum * delta);
 
@@ -38,20 +52,20 @@ public class PhysicsObject extends GenericObject {
     }
 
     // Check if object is in bounds. If not - SNAP it BACK TO REALITY. OH, THERE GOES GRAVITY!
-    private void boundsCheck() {
-        if (getX() - getCollider().width / 2 < 0) {
-            setX((float) getCollider().width / 2);
-            speedX = -speedX / SharedData.FRICTION;
+    private int boundsCheck() {
+        if (getX() < 0) {
+            setX(0);
+            return 1;
         }
-        if (getX() + getCollider().width / 2 > SharedData.SCREEN_WIDTH) {
-            setX(SharedData.SCREEN_WIDTH - (float) getCollider().width / 2);
-            speedX = -speedX / SharedData.FRICTION;
+        if (getX() - getOriginX() * getScale() + getCollider().width > SharedData.SCREEN_WIDTH) {
+            setX(SharedData.SCREEN_WIDTH - (float) getCollider().width + getOriginX() * getScale());
+            return 1;
         }
-        if (getY() + getCollider().height / 2 > SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET) {
-            setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET - getCollider().height / 2);
-            speedY = -speedY / SharedData.FRICTION;
-            speedX /= SharedData.FRICTION;
+        if (getY() - getOriginY() * getScale() + getCollider().height > SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET) {
+            setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET - getCollider().height + getOriginY() * getScale());
+            return 2;
         }
+        return 0;
     }
 
     float getSpeedX() {
@@ -84,5 +98,29 @@ public class PhysicsObject extends GenericObject {
 
     void setWeight(float weight) {
         this.weight = weight;
+    }
+
+    public float getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public void setMaxSpeed(float maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
+    public float getFriction() {
+        return friction;
+    }
+
+    public void setFriction(float friction) {
+        this.friction = friction;
+    }
+
+    public float getBounce() {
+        return bounce;
+    }
+
+    public void setBounce(float bounce) {
+        this.bounce = bounce;
     }
 }

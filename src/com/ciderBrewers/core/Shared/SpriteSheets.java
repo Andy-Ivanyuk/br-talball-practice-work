@@ -15,9 +15,9 @@ public class SpriteSheets {
         }
     }
 
-    SpriteSheet DEBUG_SPRITE;
+    public SpriteSheet DEBUG_SPRITE;
     public SpriteSheet PLAYER_SPRITE;
-    SpriteSheet BALL_SPRITE;
+    public SpriteSheet BALL_SPRITE;
     public SpriteSheet FAT_SPRITE;
 
     public SpriteSheet BK1_ANIM;
