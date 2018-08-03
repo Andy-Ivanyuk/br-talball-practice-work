@@ -1,9 +1,9 @@
-package com.ciderBrewers.core;
+package com.ciderBrewers.core.Shared;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
-class SpriteSheets {
+public class SpriteSheets {
 
     private static SpriteSheets INSTANCE;
 
@@ -16,11 +16,11 @@ class SpriteSheets {
     }
 
     SpriteSheet DEBUG_SPRITE;
-    SpriteSheet PLAYER_SPRITE;
+    public SpriteSheet PLAYER_SPRITE;
     SpriteSheet BALL_SPRITE;
-    SpriteSheet FAT_SPRITE;
+    public SpriteSheet FAT_SPRITE;
 
-    SpriteSheet BK1_ANIM;
+    public SpriteSheet BK1_ANIM;
 
     private SpriteSheets() throws SlickException {
         DEBUG_SPRITE = new SpriteSheet("data/spr/debug.png", 1, 1);
@@ -31,7 +31,7 @@ class SpriteSheets {
         BK1_ANIM = new SpriteSheet("data/spr/bk1_anim.png", 384, 256);
     }
 
-    static SpriteSheets getInstance() {
+    public static SpriteSheets getInstance() {
         return (INSTANCE);
     }
 }

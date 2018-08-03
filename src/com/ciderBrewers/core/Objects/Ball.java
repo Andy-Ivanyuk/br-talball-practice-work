@@ -1,14 +1,15 @@
-package com.ciderBrewers.core;
+package com.ciderBrewers.core.Objects;
 
+import com.ciderBrewers.core.Shared.SharedData;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SpriteSheet;
 
 import java.awt.*;
 
-class Ball extends PhysicsObject {
+public class Ball extends PhysicsObject {
 
-    Ball(SpriteSheet spriteSheet) {
+    public Ball(SpriteSheet spriteSheet) {
         setSprite(new Animation(spriteSheet, 100));
         setX(400);
         setY(500);
@@ -25,7 +26,7 @@ class Ball extends PhysicsObject {
     }
 
     //Overriding update to check for player collision and create momentum.
-    void update(GameContainer c, int delta) {
+    public void update(GameContainer c, int delta) {
         // Check for player collision
         for (Player player : SharedData.getInstance().players) {
             if (getCollider().intersects(player.getCollider())) {

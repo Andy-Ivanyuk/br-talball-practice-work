@@ -1,17 +1,18 @@
-package com.ciderBrewers.core;
+package com.ciderBrewers.core.Objects;
 
+import com.ciderBrewers.core.Shared.SharedData;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SpriteSheet;
 
 import java.awt.*;
 
-class Player extends GenericObject {
+public class Player extends GenericObject {
     int nextStep = 0;
     private float stepMultiplier = 0.2f;
     private int score = 0;
 
-    Player(SpriteSheet spriteSheet) {
+    public Player(SpriteSheet spriteSheet) {
         this.setSprite(new Animation(spriteSheet, 300));
         setY(SharedData.SCREEN_HEIGHT - SharedData.STARTING_OFFSET);
         setOriginX((float) getSprite().getWidth() / 2);
@@ -26,7 +27,7 @@ class Player extends GenericObject {
     }
 
     // Overriding update to process controller commands and calculate sprite facing
-    void update(GameContainer c, int delta) {
+    public void update(GameContainer c, int delta) {
         if (nextStep != 0) {
             getSprite().start();
             getSprite().update(delta);

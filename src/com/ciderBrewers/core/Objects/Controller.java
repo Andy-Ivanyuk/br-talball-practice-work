@@ -1,15 +1,16 @@
-package com.ciderBrewers.core;
+package com.ciderBrewers.core.Objects;
 
+import com.ciderBrewers.core.Shared.SharedData;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 
-class Controller {
+public class Controller {
     private Player player;
     private int leftWalk;
     private int rightWalk;
     private int jump;
 
-    Controller(Player player, int inputMap) {
+    public Controller(Player player, int inputMap) {
         this.player = player;
         if (inputMap == 0) {
             player.setX(SharedData.SCREEN_WIDTH - SharedData.STARTING_OFFSET);
@@ -24,7 +25,7 @@ class Controller {
         }
     }
 
-    void update(GameContainer c, int delta) {
+    public void update(GameContainer c, int delta) {
         Input walkInput = c.getInput();
         if (walkInput.isKeyDown(leftWalk)) player.nextStep -= 1;
         if (walkInput.isKeyDown(rightWalk)) player.nextStep += 1;

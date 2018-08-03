@@ -1,8 +1,9 @@
-package com.ciderBrewers.core;
+package com.ciderBrewers.core.Objects;
 
+import com.ciderBrewers.core.Shared.SharedData;
 import org.newdawn.slick.GameContainer;
 
-class PhysicsObject extends GenericObject {
+public class PhysicsObject extends GenericObject {
     private float speedX = 0;
     private float speedY = 0;
     private float maxSpeed = 0.5f;
@@ -13,7 +14,7 @@ class PhysicsObject extends GenericObject {
     }
 
     // Overriding update to add move, gravity and rotation support.
-    void update(GameContainer c, int delta) {
+    public void update(GameContainer c, int delta) {
         speedY += SharedData.GRAVITY_ACCELERATION * weight * delta;
         setX(getX() + speedX * delta);
         setY(getY() + speedY * delta);
@@ -28,6 +29,7 @@ class PhysicsObject extends GenericObject {
         super.update();
     }
 
+    // Clamp object speed to avoid infinite acceleration
     private void clampSpeed() {
         if (speedX > maxSpeed) speedX = maxSpeed;
         if (speedX < -maxSpeed) speedX = -maxSpeed;
@@ -36,7 +38,6 @@ class PhysicsObject extends GenericObject {
     }
 
     // Check if object is in bounds. If not - SNAP it BACK TO REALITY. OH, THERE GOES GRAVITY!
-    // Todo: Update to use collider instead of sprite dimensions
     private void boundsCheck() {
         if (getX() - getCollider().width / 2 < 0) {
             setX((float) getCollider().width / 2);

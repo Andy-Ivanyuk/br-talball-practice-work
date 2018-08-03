@@ -1,10 +1,11 @@
-package com.ciderBrewers.core;
+package com.ciderBrewers.core.Objects;
 
+import com.ciderBrewers.core.Shared.SharedData;
 import org.newdawn.slick.Animation;
 
 import java.awt.*;
 
-class GenericObject {
+public class GenericObject {
     private float x = 0;
     private float y = 0;
     private float rotation = 0;
@@ -29,7 +30,7 @@ class GenericObject {
     }
 
     // Draw object's sprite
-    void draw(float[] parallaxOffset) {
+    public void draw(float[] parallaxOffset) {
         int side = reversed ? 1 : -1;
 
         if (reversed) getSprite().getCurrentFrame().setCenterOfRotation(originX * scale, originY * scale);
@@ -42,7 +43,7 @@ class GenericObject {
                 getSprite().getHeight() * scale);
     }
 
-    float[] getParallaxOffset() {
+    public float[] getParallaxOffset() {
         float[] parallaxOffset = {0, 0};
         parallaxOffset[0] = (x - (float) SharedData.SCREEN_WIDTH / 2) / ((float) SharedData.SCREEN_WIDTH / 2) * SharedData.PARALLAX_VALUE;
         parallaxOffset[1] = (y - (float) SharedData.SCREEN_HEIGHT / 2) / ((float) SharedData.SCREEN_HEIGHT / 2) * SharedData.PARALLAX_VALUE;
