@@ -23,6 +23,7 @@ public class VolleyballGame extends StateBasedGame {
         try {
             AppGameContainer app;
             app = new AppGameContainer(new VolleyballGame("Totally Wicked Volleyball"));
+            app.setIcon("data/spr/fat.png");
             app.setDisplayMode(SharedData.SCREEN_WIDTH, SharedData.SCREEN_HEIGHT, false);
             app.setAlwaysRender(true);
             app.start();
