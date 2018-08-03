@@ -31,6 +31,9 @@ class Ball extends PhysicsObject {
             if (getCollider().intersects(player.getCollider())) {
                 setSpeedX(getSpeedX() + (getX() - player.getX()) / 1000);
                 setSpeedY(getSpeedY() - 0.05f);
+                if (SharedData.getInstance().background != null) {
+                    SharedData.getInstance().background.getSprite().start();
+                }
             }
         }
 
@@ -39,20 +42,5 @@ class Ball extends PhysicsObject {
 
         // Continue update
         super.update(c, delta);
-    }
-
-    // Overriding drawing for debug collider drawing
-    void draw() {
-        /*
-        // Debug colliders drawing
-        SpriteSheets.getInstance().DEBUG_SPRITE.draw(
-                getCollider().x - getCollider().width / 2,
-                getCollider().y - getCollider().height / 2,
-                getCollider().width,
-                getCollider().height);
-        */
-
-        // Continue drawing
-        super.draw();
     }
 }

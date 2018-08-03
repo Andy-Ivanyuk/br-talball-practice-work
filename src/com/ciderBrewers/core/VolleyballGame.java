@@ -25,18 +25,22 @@ public class VolleyballGame extends BasicGame {
 
     @Override
     public void init(GameContainer c) {
+        SharedData.getInstance().background = new ParallaxBackground(SpriteSheets.getInstance().BK1_ANIM);
+
         Player player1 = new Player(SpriteSheets.getInstance().PLAYER_SPRITE);
         Player player2 = new Player(SpriteSheets.getInstance().PLAYER_SPRITE);
 
         Controller con1 = new Controller(player1, 0);
         Controller con2 = new Controller(player2, 1);
-        Ball ball = new Ball(SpriteSheets.getInstance().BALL_SPRITE);
+        Ball ball = new Ball(SpriteSheets.getInstance().FAT_SPRITE);
 
         SharedData.getInstance().controllers.add(con1);
         SharedData.getInstance().controllers.add(con2);
         SharedData.getInstance().players.add(player1);
         SharedData.getInstance().players.add(player2);
         SharedData.getInstance().balls.add(ball);
+
+        SharedData.getInstance().parallaxTarget = ball;
     }
 
     @Override
@@ -49,9 +53,13 @@ public class VolleyballGame extends BasicGame {
 
     @Override
     public void render(GameContainer c, Graphics g) {
-        for (GenericObject object : SharedData.getInstance().genericObjects) object.draw();
-        for (PhysicsObject object : SharedData.getInstance().physicsObjects) object.draw();
-        for (Player object : SharedData.getInstance().players) object.draw();
-        for (Ball object : SharedData.getInstance().balls) object.draw();
+        float[] parallaxOffset = SharedData.getInstance().parallaxTarget.getParallaxOffset();
+
+        SharedData.getInstance().background.draw(parallaxOffset);
+
+        for (GenericObject object : SharedData.getInstance().genericObjects) object.draw(parallaxOffset);
+        for (PhysicsObject object : SharedData.getInstance().physicsObjects) object.draw(parallaxOffset);
+        for (Player object : SharedData.getInstance().players) object.draw(parallaxOffset);
+        for (Ball object : SharedData.getInstance().balls) object.draw(parallaxOffset);
     }
 }

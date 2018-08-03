@@ -55,17 +55,4 @@ class Player extends GenericObject {
         }
         return getX() + deltaX;
     }
-
-    // Overriding drawing for debug collider drawing
-    void draw() {
-        /*
-        // Todo: Fix this hardcoded piece of crap
-        SpriteSheets.getInstance().DEBUG_SPRITE.draw(
-                getCollider().x - 32,
-                getCollider().y - 32,
-                getCollider().width,
-                getCollider().height);
-        */
-        super.draw();
-    }
 }

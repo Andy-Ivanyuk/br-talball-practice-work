@@ -10,6 +10,8 @@ class SharedData {
     static final int STARTING_OFFSET = 70;
     static final int GROUND_OFFSET = 50;
 
+    static final int PARALLAX_VALUE = 30;
+
     static final int BALL_SIZE = 50;
     static final float BALL_SCALE = 2f;
 
@@ -18,6 +20,9 @@ class SharedData {
 
 
     private static SharedData INSTANCE = new SharedData();
+
+    ParallaxBackground background;
+    GenericObject parallaxTarget;
 
     List<Controller> controllers = new ArrayList<>();
     List<GenericObject> genericObjects = new ArrayList<>();
