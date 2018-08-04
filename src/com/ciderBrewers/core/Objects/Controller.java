@@ -29,5 +29,6 @@ public class Controller {
         Input walkInput = c.getInput();
         if (walkInput.isKeyDown(leftWalk)) player.nextStep -= 1;
         if (walkInput.isKeyDown(rightWalk)) player.nextStep += 1;
+        if (walkInput.isKeyDown(jump)) player.jump = true;
     }
 }

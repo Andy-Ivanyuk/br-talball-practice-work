@@ -56,6 +56,10 @@ public class PhysicsObject extends GenericObject {
         }
     }
 
+    public boolean isGrounded() {
+        return (getY() - getOriginY() * getScale() + getCollider().height >= SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET);
+    }
+
     float getSpeedX() {
         return speedX;
     }

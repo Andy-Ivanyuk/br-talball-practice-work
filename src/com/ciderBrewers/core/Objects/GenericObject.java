@@ -31,10 +31,10 @@ public class GenericObject {
 
     // Draw object's sprite
     public void draw(float[] parallaxOffset) {
-        int side = reversed ? 1 : -1;
+        int side = reversed ? -1 : 1;
 
-        if (reversed) getSprite().getCurrentFrame().setCenterOfRotation(originX * scale, originY * scale);
-        else getSprite().getCurrentFrame().setCenterOfRotation(-originX * scale, originY * scale);
+        if (reversed) getSprite().getCurrentFrame().setCenterOfRotation(-originX * scale, originY * scale);
+        else getSprite().getCurrentFrame().setCenterOfRotation(originX * scale, originY * scale);
         getSprite().getCurrentFrame().setRotation(rotation);
         getSprite().draw(
                 getX() - getOriginX() * scale * side - parallaxOffset[0],
