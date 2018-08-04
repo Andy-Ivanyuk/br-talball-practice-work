@@ -31,9 +31,9 @@ public class SharedData {
 
     private static SharedData INSTANCE = new SharedData();
 
-    public ParallaxBackground background;
     public GenericObject parallaxTarget;
 
+    public List<ParallaxBackground> backgrounds = new ArrayList<>();
     public List<Controller> controllers = new ArrayList<>();
     public List<GenericObject> genericObjects = new ArrayList<>();
     public List<PhysicsObject> physicsObjects = new ArrayList<>();

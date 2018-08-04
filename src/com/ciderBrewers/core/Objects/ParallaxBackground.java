@@ -6,27 +6,23 @@ import org.newdawn.slick.SpriteSheet;
 
 public class ParallaxBackground {
     private Animation sprite;
+    private float depth;
 
-    public ParallaxBackground(SpriteSheet spriteSheet) {
+    public ParallaxBackground(SpriteSheet spriteSheet, float depth) {
         this.sprite = new Animation(spriteSheet, 10);
+
         this.sprite.setPingPong(true);
         this.sprite.setLooping(false);
+
+        this.depth = depth;
     }
 
     public void draw(float[] parallaxOffset) {
         sprite.draw(
-                -SharedData.PARALLAX_VALUE - parallaxOffset[0],
-                -SharedData.PARALLAX_VALUE - parallaxOffset[1],
+                -SharedData.PARALLAX_VALUE - parallaxOffset[0] / depth,
+                -SharedData.PARALLAX_VALUE - parallaxOffset[1] / depth,
                 SharedData.SCREEN_WIDTH + SharedData.PARALLAX_VALUE * 2,
                 SharedData.SCREEN_HEIGHT + SharedData.PARALLAX_VALUE * 2
         );
-    }
-
-    Animation getSprite() {
-        return sprite;
-    }
-
-    void setSprite(Animation sprite) {
-        this.sprite = sprite;
     }
 }

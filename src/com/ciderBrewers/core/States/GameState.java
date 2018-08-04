@@ -18,7 +18,9 @@ public class GameState extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) {
-        SharedData.getInstance().background = new ParallaxBackground(SpriteSheets.getInstance().DEBUG_BACKGROUND);
+        ParallaxBackground bg1 = new ParallaxBackground(SpriteSheets.getInstance().DEBUG_BACKGROUND_DYNAMIC_1, 3);
+        ParallaxBackground bg2 = new ParallaxBackground(SpriteSheets.getInstance().DEBUG_BACKGROUND_DYNAMIC_2, 1);
+        ParallaxBackground bg3 = new ParallaxBackground(SpriteSheets.getInstance().DEBUG_BACKGROUND_DYNAMIC_3, 0.9f);
 
         Ball ball = new Ball(SpriteSheets.getInstance().FAT_SPRITE);
 
@@ -27,6 +29,10 @@ public class GameState extends BasicGameState {
 
         Controller con1 = new Controller(player1, 0);
         Controller con2 = new Controller(player2, 1);
+
+        SharedData.getInstance().backgrounds.add(bg1);
+        SharedData.getInstance().backgrounds.add(bg2);
+        SharedData.getInstance().backgrounds.add(bg3);
 
         SharedData.getInstance().controllers.add(con1);
         SharedData.getInstance().controllers.add(con2);
@@ -41,8 +47,7 @@ public class GameState extends BasicGameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         float[] parallaxOffset = SharedData.getInstance().parallaxTarget.getParallaxOffset();
 
-        SharedData.getInstance().background.draw(parallaxOffset);
-
+        for (ParallaxBackground object : SharedData.getInstance().backgrounds) object.draw(parallaxOffset);
         for (GenericObject object : SharedData.getInstance().genericObjects) object.draw(parallaxOffset);
         for (PhysicsObject object : SharedData.getInstance().physicsObjects) object.draw(parallaxOffset);
         for (Player object : SharedData.getInstance().players) object.draw(parallaxOffset);
