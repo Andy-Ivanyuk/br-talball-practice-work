@@ -25,4 +25,20 @@ public class ParallaxBackground {
                 SharedData.SCREEN_HEIGHT + SharedData.PARALLAX_VALUE * 2
         );
     }
+
+    public Animation getSprite() {
+        return sprite;
+    }
+
+    public void setSprite(Animation sprite) {
+        this.sprite = sprite;
+    }
+
+    public float getDepth() {
+        return depth;
+    }
+
+    public void setDepth(float depth) {
+        this.depth = depth;
+    }
 }
