@@ -26,8 +26,8 @@ public class GameState extends BasicGameState {
 
         Ball ball = new Ball(SpriteSheets.getInstance().FAT_SPRITE);
 
-        Player player1 = new Player(SpriteSheets.getInstance().PLAYER_SPRITE, ball);
-        Player player2 = new Player(SpriteSheets.getInstance().PLAYER_SPRITE, ball);
+        Player player1 = new Player(SpriteSheets.getInstance().VALIK_IDLE, SpriteSheets.getInstance().VALIK_WALK, SpriteSheets.getInstance().VALIK_JUMP, ball);
+        Player player2 = new Player(SpriteSheets.getInstance().MCKIDDO_IDLE, SpriteSheets.getInstance().MCKIDDO_WALK, SpriteSheets.getInstance().MCKIDDO_JUMP, ball);
 
         Controller con1 = new Controller(player1, 0);
         Controller con2 = new Controller(player2, 1);

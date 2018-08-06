@@ -23,29 +23,47 @@ public class SpriteSheets {
     public SpriteSheet DEBUG_BACKGROUND_DYNAMIC_4;
     public SpriteSheet DEBUG_BACKGROUND_DYNAMIC_5;
 
-    public SpriteSheet PLAYER_SPRITE;
+    // VALIK
+    public SpriteSheet VALIK_IDLE;
+    public SpriteSheet VALIK_WALK;
+    public SpriteSheet VALIK_JUMP;
+
+    // MCKIDDO
+    public SpriteSheet MCKIDDO_IDLE;
+    public SpriteSheet MCKIDDO_WALK;
+    public SpriteSheet MCKIDDO_JUMP;
+
     public SpriteSheet BALL_SPRITE;
     public SpriteSheet FAT_SPRITE;
 
     public SpriteSheet BG1_ANIM;
 
     private SpriteSheets() throws SlickException {
-        DEBUG_SPRITE = new SpriteSheet("data/spr/debug.png", 1, 1);
-
         // Throws an exception but still loads picture.
         //Todo: Fix it.
-        DEBUG_BACKGROUND_STATIC = new SpriteSheet("data/spr/bg_debug.png", 800, 600);
-        DEBUG_BACKGROUND_DYNAMIC_1 = new SpriteSheet("data/spr/bg_debug_1.png", 800, 600);
-        DEBUG_BACKGROUND_DYNAMIC_2 = new SpriteSheet("data/spr/bg_debug_2.png", 800, 600);
-        DEBUG_BACKGROUND_DYNAMIC_3 = new SpriteSheet("data/spr/bg_debug_3.png", 800, 600);
-        DEBUG_BACKGROUND_DYNAMIC_4 = new SpriteSheet("data/spr/bg_debug_4.png", 800, 600);
-        DEBUG_BACKGROUND_DYNAMIC_5 = new SpriteSheet("data/spr/bg_debug_5.png", 800, 600);
+        DEBUG_BACKGROUND_STATIC = new SpriteSheet("data/bg/bg_debug.png", 800, 600);
+        DEBUG_BACKGROUND_DYNAMIC_1 = new SpriteSheet("data/bg/bg_debug_1.png", 800, 600);
+        DEBUG_BACKGROUND_DYNAMIC_2 = new SpriteSheet("data/bg/bg_debug_2.png", 800, 600);
+        DEBUG_BACKGROUND_DYNAMIC_3 = new SpriteSheet("data/bg/bg_debug_3.png", 800, 600);
+        DEBUG_BACKGROUND_DYNAMIC_4 = new SpriteSheet("data/bg/bg_debug_4.png", 800, 600);
+        DEBUG_BACKGROUND_DYNAMIC_5 = new SpriteSheet("data/bg/bg_debug_5.png", 800, 600);
 
-        PLAYER_SPRITE = new SpriteSheet("data/spr/player1.png", 36, 123);
+        BG1_ANIM = new SpriteSheet("data/bg/bg1_anim.png", 384, 256);
+
+        DEBUG_SPRITE = new SpriteSheet("data/spr/debug.png", 1, 1);
+
+        // VALIK
+        VALIK_IDLE = new SpriteSheet("data/spr/valik/idle.png", 36, 98);
+        VALIK_WALK = new SpriteSheet("data/spr/valik/walk.png", 36, 98);
+        VALIK_JUMP = new SpriteSheet("data/spr/valik/jump.png", 36, 98);
+
+        // MCKIDDO
+        MCKIDDO_IDLE = new SpriteSheet("data/spr/mckiddo/idle.png", 36, 98);
+        MCKIDDO_WALK = new SpriteSheet("data/spr/mckiddo/walk.png", 36, 98);
+        MCKIDDO_JUMP = new SpriteSheet("data/spr/mckiddo/jump.png", 36, 98);
+
         BALL_SPRITE = new SpriteSheet("data/spr/ball.png", 32, 32);
         FAT_SPRITE = new SpriteSheet("data/spr/fat.png", 32, 32);
-
-        BG1_ANIM = new SpriteSheet("data/spr/bg1_anim.png", 384, 256);
     }
 
     public static SpriteSheets getInstance() {
