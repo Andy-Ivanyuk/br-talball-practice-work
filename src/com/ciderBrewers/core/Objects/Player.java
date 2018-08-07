@@ -8,8 +8,8 @@ import org.newdawn.slick.SpriteSheet;
 import java.awt.*;
 
 public class Player extends PhysicsObject {
-    int nextStep = 0;
-    boolean jump = false;
+    public int nextStep = 0;
+    public boolean jump = false;
     private float stepMultiplier = SharedData.PLAYER_WALK_SPEED;
     private float jumpSpeed = SharedData.PLAYER_JUMP_SPEED;
     private int score = 0;
@@ -35,6 +35,8 @@ public class Player extends PhysicsObject {
 
         setScale(SharedData.PLAYER_SCALE);
         setWeight(SharedData.PLAYER_WEIGTH);
+
+        setMaxSpeed(SharedData.MAX_PLAYER_SPEED);
 
         setCollider(new Rectangle(
                 new Float(getX() - getOriginX() * getScale()).intValue(),
@@ -71,8 +73,6 @@ public class Player extends PhysicsObject {
         if (getX() - target.getX() < 0) setReversed(false);
         else setReversed(true);
 
-        getSprite().update(delta);
-
         super.update(c, delta);
     }
 
@@ -81,5 +81,13 @@ public class Player extends PhysicsObject {
             if (nextStep == 0) setSprite(animIdle);
             else setSprite(animWalk);
         } else setSprite(animJump);
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

@@ -1,5 +1,6 @@
 package com.ciderBrewers.core.States;
 
+import com.ciderBrewers.core.Controllers.GameController;
 import com.ciderBrewers.core.Objects.*;
 import com.ciderBrewers.core.Shared.SharedData;
 import com.ciderBrewers.core.Shared.SpriteSheets;
@@ -12,6 +13,7 @@ import java.awt.*;
 
 public class GameState extends BasicGameState {
 
+    GameController gameController;
 
     @Override
     public int getID() {
@@ -31,8 +33,7 @@ public class GameState extends BasicGameState {
         Player player1 = new Player(SpriteSheets.getInstance().VALIK_IDLE, SpriteSheets.getInstance().VALIK_WALK, SpriteSheets.getInstance().VALIK_JUMP, ball);
         Player player2 = new Player(SpriteSheets.getInstance().MCKIDDO_IDLE, SpriteSheets.getInstance().MCKIDDO_WALK, SpriteSheets.getInstance().MCKIDDO_JUMP, ball);
 
-        new Controller(player1, 0);
-        new Controller(player2, 1);
+        gameController = new GameController(player1, player2, ball);
 
         // Divider
         GenericObject divider = new GenericObject();
@@ -50,24 +51,22 @@ public class GameState extends BasicGameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         float[] parallaxOffset = SharedData.getInstance().parallaxTarget.getParallaxOffset();
 
-        for (ParallaxBackground object : SharedData.getInstance().backgrounds)
-            if (object.getDepth() >= 1) object.draw(parallaxOffset);
-
+        for (ParallaxBackground object : SharedData.getInstance().backgrounds) object.draw(parallaxOffset);
         for (GenericObject object : SharedData.getInstance().genericObjects) object.draw(parallaxOffset);
         for (PhysicsObject object : SharedData.getInstance().physicsObjects) object.draw(parallaxOffset);
         for (Player object : SharedData.getInstance().players) object.draw(parallaxOffset);
         for (Ball object : SharedData.getInstance().balls) object.draw(parallaxOffset);
-
-        for (ParallaxBackground object : SharedData.getInstance().backgrounds)
-            if (object.getDepth() < 1) object.draw(parallaxOffset);
     }
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
-        for (Controller controller : SharedData.getInstance().controllers) controller.update(gameContainer, delta);
-        for (GenericObject object : SharedData.getInstance().genericObjects) object.update(gameContainer, delta);
-        for (PhysicsObject object : SharedData.getInstance().physicsObjects) object.update(gameContainer, delta);
-        for (Player object : SharedData.getInstance().players) object.update(gameContainer, delta);
-        for (Ball object : SharedData.getInstance().balls) object.update(gameContainer, delta);
+        gameController.update(gameContainer, delta);
+
+        if (gameController.getGameState() == SharedData.GAME_STATE_RUN) {
+            for (GenericObject object : SharedData.getInstance().genericObjects) object.update(gameContainer, delta);
+            for (PhysicsObject object : SharedData.getInstance().physicsObjects) object.update(gameContainer, delta);
+            for (Player object : SharedData.getInstance().players) object.update(gameContainer, delta);
+            for (Ball object : SharedData.getInstance().balls) object.update(gameContainer, delta);
+        }
     }
 }

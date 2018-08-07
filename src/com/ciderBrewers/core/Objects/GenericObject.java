@@ -29,6 +29,8 @@ public class GenericObject {
 
         if (getRotation() < 0) setRotation(getRotation() + 360);
         if (getRotation() >= 360) setRotation(getRotation() - 360);
+
+        if (sprite != null) sprite.update(delta);
     }
 
     // Draw object's sprite

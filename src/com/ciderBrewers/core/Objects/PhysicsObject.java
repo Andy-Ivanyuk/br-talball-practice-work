@@ -40,15 +40,15 @@ public class PhysicsObject extends GenericObject {
         if (speedY < -maxSpeed) speedY = -maxSpeed;
     }
 
-    // Check if object is in bounds. If not - SNAP it BACK TO REALITY. OH, THERE GOES GRAVITY!
+    // Snap to bounds
     private void boundsCheck() {
         if (getX() - getOriginX() * getScale() < 0) {
             setX(getOriginX() * getScale());
-            speedX = -speedX / friction;
+            speedX /= -friction;
         }
         if (getX() - getOriginX() * getScale() + getCollider().width > SharedData.SCREEN_WIDTH) {
             setX(SharedData.SCREEN_WIDTH - (float) getCollider().width + getOriginX() * getScale());
-            speedX = -speedX / friction;
+            speedX /= -friction;
         }
         if (getY() - getOriginY() * getScale() + getCollider().height > SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET) {
             setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET - getCollider().height + getOriginY() * getScale());
@@ -65,7 +65,7 @@ public class PhysicsObject extends GenericObject {
         return speedX;
     }
 
-    void setSpeedX(float speedX) {
+    public void setSpeedX(float speedX) {
         this.speedX = speedX;
     }
 
@@ -73,7 +73,7 @@ public class PhysicsObject extends GenericObject {
         return speedY;
     }
 
-    void setSpeedY(float speedY) {
+    public void setSpeedY(float speedY) {
         this.speedY = speedY;
     }
 

@@ -44,8 +44,8 @@ public class Ball extends PhysicsObject {
                 float horizontalDelta = getCollider().x - object.getCollider().x;
                 float verticalDelta = getCollider().y - object.getCollider().y;
 
-                if (verticalDelta < 0) setSpeedY(-getSpeedY());
-                else setSpeedX(-getSpeedX());
+                if (verticalDelta < 0) setSpeedY(-getSpeedY() / SharedData.FRICTION);
+                else setSpeedX(-getSpeedX() / SharedData.FRICTION);
             }
         }
 

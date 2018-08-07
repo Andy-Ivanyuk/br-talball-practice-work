@@ -18,6 +18,7 @@ public class SharedData {
 
     public static final float GRAVITY_ACCELERATION = 0.001f;
     public static final float MAX_SPEED = 0.5f;
+    public static final float MAX_PLAYER_SPEED = 0.7f;
     public static final float FRICTION = 1.1f;
     public static final float BOUNCE = 0.9f;
 
@@ -29,12 +30,17 @@ public class SharedData {
     public static final float PLAYER_WALK_SPEED = 0.2f;
     public static final float PLAYER_JUMP_SPEED = 2f;
 
+    public static final int GAME_STATE_RUN = 0;
+    public static final int GAME_STATE_PAUSE = 1;
+    public static final int GAME_STATE_PAUSE_PHYSICS = 2;
+
+    public static final int PAUSE_TIME = 3;
+
     private static SharedData INSTANCE = new SharedData();
 
     public GenericObject parallaxTarget;
 
     public List<ParallaxBackground> backgrounds = new ArrayList<>();
-    public List<Controller> controllers = new ArrayList<>();
     public List<GenericObject> genericObjects = new ArrayList<>();
     public List<PhysicsObject> physicsObjects = new ArrayList<>();
     public List<Player> players = new ArrayList<>();
