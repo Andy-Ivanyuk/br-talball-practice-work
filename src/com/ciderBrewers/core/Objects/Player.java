@@ -47,6 +47,8 @@ public class Player extends PhysicsObject {
         setBounce(SharedData.PLAYER_BOUNCE);
 
         this.target = target;
+
+        SharedData.getInstance().players.add(this);
     }
 
     // Overriding update to process controller commands and calculate sprite facing

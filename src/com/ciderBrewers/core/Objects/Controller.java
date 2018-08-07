@@ -23,6 +23,8 @@ public class Controller {
             this.rightWalk = Input.KEY_D;
             this.jump = Input.KEY_W;
         }
+
+        SharedData.getInstance().controllers.add(this);
     }
 
     public void update(GameContainer c, int delta) {

@@ -2,6 +2,7 @@ package com.ciderBrewers.core.Objects;
 
 import com.ciderBrewers.core.Shared.SharedData;
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.GameContainer;
 
 import java.awt.*;
 
@@ -17,11 +18,12 @@ public class GenericObject {
     private boolean isSolid = false;
     private Rectangle collider;
 
-    GenericObject() {
+    public GenericObject() {
+        //SharedData.getInstance().genericObjects.add(this);
     }
 
     // Sync collider coordinates and clamp rotation angle
-    void update() {
+    public void update(GameContainer gameContainer, int delta) {
         collider.x = new Float(x - originX * scale).intValue();
         collider.y = new Float(y - originY * scale).intValue();
 
@@ -31,16 +33,28 @@ public class GenericObject {
 
     // Draw object's sprite
     public void draw(float[] parallaxOffset) {
-        int side = reversed ? -1 : 1;
+        // Debug collider drawing
+        /*
+        SpriteSheets.getInstance().DEBUG_SPRITE.draw(
+                collider.x - parallaxOffset[0],
+                collider.y - parallaxOffset[1],
+                collider.width,
+                collider.height);
+        */
 
-        if (reversed) getSprite().getCurrentFrame().setCenterOfRotation(-originX * scale, originY * scale);
-        else getSprite().getCurrentFrame().setCenterOfRotation(originX * scale, originY * scale);
-        getSprite().getCurrentFrame().setRotation(rotation);
-        getSprite().draw(
-                getX() - getOriginX() * scale * side - parallaxOffset[0],
-                getY() - getOriginY() * scale - parallaxOffset[1],
-                getSprite().getWidth() * scale * side,
-                getSprite().getHeight() * scale);
+        if (getSprite() != null) {
+            int side = reversed ? -1 : 1;
+
+            if (reversed) getSprite().getCurrentFrame().setCenterOfRotation(-originX * scale, originY * scale);
+            else getSprite().getCurrentFrame().setCenterOfRotation(originX * scale, originY * scale);
+            getSprite().getCurrentFrame().setRotation(rotation);
+
+            getSprite().draw(
+                    getX() - getOriginX() * scale * side - parallaxOffset[0],
+                    getY() - getOriginY() * scale - parallaxOffset[1],
+                    getSprite().getWidth() * scale * side,
+                    getSprite().getHeight() * scale);
+        }
     }
 
     public float[] getParallaxOffset() {
@@ -50,19 +64,19 @@ public class GenericObject {
         return parallaxOffset;
     }
 
-    float getX() {
+    public float getX() {
         return x;
     }
 
-    void setX(float x) {
+    public void setX(float x) {
         this.x = x;
     }
 
-    float getY() {
+    public float getY() {
         return y;
     }
 
-    void setY(float y) {
+    public void setY(float y) {
         this.y = y;
     }
 
@@ -90,19 +104,19 @@ public class GenericObject {
         this.sprite = sprite;
     }
 
-    float getOriginX() {
+    public float getOriginX() {
         return originX;
     }
 
-    void setOriginX(float originX) {
+    public void setOriginX(float originX) {
         this.originX = originX;
     }
 
-    float getOriginY() {
+    public float getOriginY() {
         return originY;
     }
 
-    void setOriginY(float originY) {
+    public void setOriginY(float originY) {
         this.originY = originY;
     }
 
@@ -114,11 +128,11 @@ public class GenericObject {
         this.scale = scale;
     }
 
-    Rectangle getCollider() {
+    public Rectangle getCollider() {
         return collider;
     }
 
-    void setCollider(Rectangle collider) {
+    public void setCollider(Rectangle collider) {
         this.collider = collider;
     }
 

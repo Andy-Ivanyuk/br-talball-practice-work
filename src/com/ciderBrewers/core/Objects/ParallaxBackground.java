@@ -15,6 +15,8 @@ public class ParallaxBackground {
         this.sprite.setLooping(false);
 
         this.depth = depth;
+
+        SharedData.getInstance().backgrounds.add(this);
     }
 
     public void draw(float[] parallaxOffset) {

@@ -11,8 +11,8 @@ public class Ball extends PhysicsObject {
 
     public Ball(SpriteSheet spriteSheet) {
         setSprite(new Animation(spriteSheet, 100));
-        setX(400);
-        setY(500);
+        setX((float) SharedData.SCREEN_WIDTH / 2);
+        setY(100);
         setSpeedX(0.0f);
         setOriginX((float) getSprite().getWidth() / 2);
         setOriginY((float) getSprite().getHeight() / 2);
@@ -23,6 +23,8 @@ public class Ball extends PhysicsObject {
                 new Float(getSprite().getWidth() * getScale()).intValue(),
                 new Float(getSprite().getHeight() * getScale()).intValue()));
         setSolid(true);
+
+        SharedData.getInstance().balls.add(this);
     }
 
     //Overriding update to check for player collision and create momentum.
@@ -39,7 +41,11 @@ public class Ball extends PhysicsObject {
         }
         for (GenericObject object : SharedData.getInstance().genericObjects) {
             if (getCollider().intersects(object.getCollider())) {
-                setSpeedX(-getSpeedX());
+                float horizontalDelta = getCollider().x - object.getCollider().x;
+                float verticalDelta = getCollider().y - object.getCollider().y;
+
+                if (verticalDelta < 0) setSpeedY(-getSpeedY());
+                else setSpeedX(-getSpeedX());
             }
         }
 

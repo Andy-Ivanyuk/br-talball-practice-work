@@ -13,6 +13,7 @@ public class PhysicsObject extends GenericObject {
     private float bounce = SharedData.BOUNCE;
 
     PhysicsObject() {
+        //SharedData.getInstance().physicsObjects.add(this);
     }
 
     // Overriding update to add move, gravity and rotation support.
@@ -28,7 +29,7 @@ public class PhysicsObject extends GenericObject {
         setRotation(getRotation() + momentum * delta);
 
         // Continue update (sync collider coordinates and clamp rotation)
-        super.update();
+        super.update(c, delta);
     }
 
     // Clamp object speed to avoid infinite acceleration
