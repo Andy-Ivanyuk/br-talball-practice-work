@@ -2,15 +2,24 @@ package com.ciderBrewers.core.Shared;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.TrueTypeFont;
 
-public class SpriteSheets {
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.io.IOException;
 
-    private static SpriteSheets INSTANCE;
+public class SharedResources {
+
+    private static SharedResources INSTANCE;
 
     static {
         try {
-            INSTANCE = new SpriteSheets();
+            INSTANCE = new SharedResources();
         } catch (SlickException e) {
+            e.printStackTrace();
+        } catch (FontFormatException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -38,7 +47,15 @@ public class SpriteSheets {
     public SpriteSheet MCKIDDO_WALK;
     public SpriteSheet MCKIDDO_JUMP;
 
-    private SpriteSheets() throws SlickException {
+    // UI
+    public SpriteSheet BATTLE_UI;
+
+    // FONTS
+    public TrueTypeFont BATTLE_UI_NAME;
+    public TrueTypeFont BATTLE_UI_GOAL;
+    public TrueTypeFont BATTLE_UI_SCORE;
+
+    private SharedResources() throws SlickException, IOException, FontFormatException {
         // Throws an exception but still loads picture.
         //Todo: Fix it.
         // DEBUG
@@ -63,9 +80,22 @@ public class SpriteSheets {
         MCKIDDO_IDLE = new SpriteSheet("data/spr/mckiddo/idle.png", 36, 98);
         MCKIDDO_WALK = new SpriteSheet("data/spr/mckiddo/walk.png", 36, 98);
         MCKIDDO_JUMP = new SpriteSheet("data/spr/mckiddo/jump.png", 36, 98);
+
+        // UI
+        BATTLE_UI = new SpriteSheet("data/ui/battleUI.png", 800, 600);
+
+        // FONTS
+        Font font = new Font("Bahnschrift", Font.BOLD, 36).deriveFont(AffineTransform.getScaleInstance(.65, 1d));
+        BATTLE_UI_NAME = new TrueTypeFont(font, true);
+
+        font = new Font("Bahnschrift", Font.BOLD, 26).deriveFont(AffineTransform.getScaleInstance(.65, 1d));
+        BATTLE_UI_GOAL = new TrueTypeFont(font, true);
+
+        font = new Font("Bahnschrift", Font.BOLD, 42);
+        BATTLE_UI_SCORE = new TrueTypeFont(font, true);
     }
 
-    public static SpriteSheets getInstance() {
+    public static SharedResources getInstance() {
         return (INSTANCE);
     }
 }

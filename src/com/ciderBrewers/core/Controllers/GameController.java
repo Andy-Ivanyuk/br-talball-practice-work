@@ -3,8 +3,10 @@ package com.ciderBrewers.core.Controllers;
 import com.ciderBrewers.core.Objects.Ball;
 import com.ciderBrewers.core.Objects.Player;
 import com.ciderBrewers.core.Shared.SharedData;
+import com.ciderBrewers.core.Shared.SharedResources;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.TrueTypeFont;
 
 public class GameController {
     private Ball ball;
@@ -13,6 +15,8 @@ public class GameController {
     private int leftWalk;
     private int rightWalk;
     private int jump;
+
+    private int goal = 10;
 
     private long lastPauseTime;
 
@@ -51,6 +55,10 @@ public class GameController {
         }
     }
 
+    public void draw() {
+        drawBattleUI();
+    }
+
     void playerScored(Player player) {
         gameState = SharedData.GAME_STATE_PAUSE_PHYSICS;
 
@@ -76,5 +84,26 @@ public class GameController {
 
             gameState = SharedData.GAME_STATE_RUN;
         }
+    }
+
+    void drawBattleUI() {
+        SharedResources.getInstance().BATTLE_UI.draw(0, 0, SharedData.SCREEN_WIDTH, SharedData.SCREEN_HEIGHT);
+
+        TrueTypeFont nameFont = SharedResources.getInstance().BATTLE_UI_NAME;
+        TrueTypeFont goalFont = SharedResources.getInstance().BATTLE_UI_GOAL;
+        TrueTypeFont scoreFont = SharedResources.getInstance().BATTLE_UI_SCORE;
+
+        nameFont.drawString(40.0f, 16.0f, "GayKidder", SharedData.COLOR_WHITESMOKE);
+        float textWidth = nameFont.getWidth("NiggerFaggot");
+        nameFont.drawString(SharedData.SCREEN_WIDTH - 40.0f - textWidth, 16.0f, "NiggerFaggot", SharedData.COLOR_WHITESMOKE);
+
+        textWidth = goalFont.getWidth(Integer.toString(goal));
+        goalFont.drawString((float) SharedData.SCREEN_WIDTH / 2 - textWidth / 2, 7f, Integer.toString(goal), SharedData.COLOR_BLACK);
+
+        textWidth = goalFont.getWidth(Integer.toString(player1.getScore()));
+        scoreFont.drawString((float) SharedData.SCREEN_WIDTH / 2 - textWidth / 2 - 34, 31f, Integer.toString(player1.getScore()), SharedData.COLOR_WHITESMOKE);
+
+        textWidth = goalFont.getWidth(Integer.toString(player2.getScore()));
+        scoreFont.drawString((float) SharedData.SCREEN_WIDTH / 2 - textWidth / 2 + 18, 31f, Integer.toString(player2.getScore()), SharedData.COLOR_WHITESMOKE);
     }
 }

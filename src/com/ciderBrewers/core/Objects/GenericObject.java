@@ -37,7 +37,7 @@ public class GenericObject {
     public void draw(float[] parallaxOffset) {
         // Debug collider drawing
         /*
-        SpriteSheets.getInstance().DEBUG_SPRITE.draw(
+        SharedResources.getInstance().DEBUG_SPRITE.draw(
                 collider.x - parallaxOffset[0],
                 collider.y - parallaxOffset[1],
                 collider.width,

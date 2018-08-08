@@ -3,7 +3,7 @@ package com.ciderBrewers.core.States;
 import com.ciderBrewers.core.Controllers.GameController;
 import com.ciderBrewers.core.Objects.*;
 import com.ciderBrewers.core.Shared.SharedData;
-import com.ciderBrewers.core.Shared.SpriteSheets;
+import com.ciderBrewers.core.Shared.SharedResources;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.BasicGameState;
@@ -22,16 +22,16 @@ public class GameState extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) {
-        new ParallaxBackground(SpriteSheets.getInstance().DEBUG_BACKGROUND_DYNAMIC_1, 4);
-        new ParallaxBackground(SpriteSheets.getInstance().DEBUG_BACKGROUND_DYNAMIC_2, 5);
-        new ParallaxBackground(SpriteSheets.getInstance().DEBUG_BACKGROUND_DYNAMIC_5, 1.1f);
-        new ParallaxBackground(SpriteSheets.getInstance().DEBUG_BACKGROUND_DYNAMIC_4, 1);
-        new ParallaxBackground(SpriteSheets.getInstance().DEBUG_BACKGROUND_DYNAMIC_3, 0.9f);
+        new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_1, 4);
+        new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_2, 5);
+        new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_5, 1.1f);
+        new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_4, 1);
+        new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_3, 0.9f);
 
-        Ball ball = new Ball(SpriteSheets.getInstance().FAT_SPRITE);
+        Ball ball = new Ball(SharedResources.getInstance().FAT_SPRITE);
 
-        Player player1 = new Player(SpriteSheets.getInstance().VALIK_IDLE, SpriteSheets.getInstance().VALIK_WALK, SpriteSheets.getInstance().VALIK_JUMP, ball);
-        Player player2 = new Player(SpriteSheets.getInstance().MCKIDDO_IDLE, SpriteSheets.getInstance().MCKIDDO_WALK, SpriteSheets.getInstance().MCKIDDO_JUMP, ball);
+        Player player1 = new Player(SharedResources.getInstance().VALIK_IDLE, SharedResources.getInstance().VALIK_WALK, SharedResources.getInstance().VALIK_JUMP, ball);
+        Player player2 = new Player(SharedResources.getInstance().MCKIDDO_IDLE, SharedResources.getInstance().MCKIDDO_WALK, SharedResources.getInstance().MCKIDDO_JUMP, ball);
 
         gameController = new GameController(player1, player2, ball);
 
@@ -56,6 +56,8 @@ public class GameState extends BasicGameState {
         for (PhysicsObject object : SharedData.getInstance().physicsObjects) object.draw(parallaxOffset);
         for (Player object : SharedData.getInstance().players) object.draw(parallaxOffset);
         for (Ball object : SharedData.getInstance().balls) object.draw(parallaxOffset);
+
+        gameController.draw();
     }
 
     @Override

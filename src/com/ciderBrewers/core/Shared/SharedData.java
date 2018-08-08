@@ -1,6 +1,7 @@
 package com.ciderBrewers.core.Shared;
 
 import com.ciderBrewers.core.Objects.*;
+import org.newdawn.slick.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,9 @@ public class SharedData {
     public static final int GAME_STATE_PAUSE_PHYSICS = 2;
 
     public static final int PAUSE_TIME = 3;
+
+    public static final org.newdawn.slick.Color COLOR_WHITESMOKE = new Color(245, 245, 245);
+    public static final org.newdawn.slick.Color COLOR_BLACK = new Color(0, 0, 0);
 
     private static SharedData INSTANCE = new SharedData();
 
