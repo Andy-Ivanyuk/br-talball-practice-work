@@ -1,6 +1,7 @@
 package com.ciderBrewers.core.Objects;
 
 import com.ciderBrewers.core.Shared.SharedData;
+import com.ciderBrewers.core.Shared.SharedResources;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 
@@ -56,6 +57,12 @@ public class GenericObject {
                     getY() - getOriginY() * scale - parallaxOffset[1],
                     getSprite().getWidth() * scale * side,
                     getSprite().getHeight() * scale);
+
+            SharedResources.getInstance().SHADOW_SPRITE.draw(
+                    getX() - getOriginX() * scale * side - parallaxOffset[0],
+                    SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET - SharedResources.getInstance().SHADOW_SPRITE.getHeight() / 2 - parallaxOffset[1],
+                    getSprite().getWidth() * scale * 1.1f * side,
+                    SharedResources.getInstance().SHADOW_SPRITE.getHeight());
         }
     }
 

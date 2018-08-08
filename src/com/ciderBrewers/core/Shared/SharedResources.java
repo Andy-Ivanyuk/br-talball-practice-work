@@ -33,6 +33,9 @@ public class SharedResources {
 
     public SpriteSheet DEBUG_SPRITE;
 
+    // COMMON
+    public SpriteSheet SHADOW_SPRITE;
+
     // BALLS
     public SpriteSheet BALL_SPRITE;
     public SpriteSheet FAT_SPRITE;
@@ -66,6 +69,9 @@ public class SharedResources {
         DEBUG_BACKGROUND_DYNAMIC_5 = new SpriteSheet("data/bg/bg_debug_5.png", 800, 600);
 
         DEBUG_SPRITE = new SpriteSheet("data/spr/debug.png", 1, 1);
+
+        // COMMON
+        SHADOW_SPRITE = new SpriteSheet("data/spr/shadow.png", 86, 37);
 
         // BALLS
         BALL_SPRITE = new SpriteSheet("data/spr/ball.png", 32, 32);
