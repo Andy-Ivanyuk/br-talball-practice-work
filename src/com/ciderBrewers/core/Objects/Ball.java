@@ -5,8 +5,6 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SpriteSheet;
 
-import java.awt.*;
-
 public class Ball extends PhysicsObject {
 
     public Ball(SpriteSheet spriteSheet) {
@@ -17,11 +15,13 @@ public class Ball extends PhysicsObject {
         setOriginX((float) getSprite().getWidth() / 2);
         setOriginY((float) getSprite().getHeight() / 2);
         setScale(SharedData.BALL_SCALE);
-        setCollider(new Rectangle(
-                new Float(getX() - getOriginX() * getScale()).intValue(),
-                new Float(getY() - getOriginX() * getScale()).intValue(),
-                new Float(getSprite().getWidth() * getScale()).intValue(),
-                new Float(getSprite().getHeight() * getScale()).intValue()));
+        setCollider(new Collider(
+                getX(),
+                getY(),
+                getSprite().getWidth() * getScale() / 2,
+                getSprite().getWidth() * getScale() / 2,
+                getSprite().getHeight() * getScale() / 2,
+                getSprite().getHeight() * getScale() / 2));
         setSolid(true);
 
         SharedData.getInstance().balls.add(this);
@@ -41,8 +41,8 @@ public class Ball extends PhysicsObject {
         }
         for (GenericObject object : SharedData.getInstance().genericObjects) {
             if (getCollider().intersects(object.getCollider())) {
-                float horizontalDelta = getCollider().x - object.getCollider().x;
-                float verticalDelta = getCollider().y - object.getCollider().y;
+                float horizontalDelta = getCollider().x - getCollider().left - object.getCollider().x - object.getCollider().left;
+                float verticalDelta = getCollider().y - getCollider().up - object.getCollider().y - object.getCollider().up;
 
                 if (verticalDelta < 0) setSpeedY(-getSpeedY() / SharedData.FRICTION);
                 else setSpeedX(-getSpeedX() / SharedData.FRICTION);

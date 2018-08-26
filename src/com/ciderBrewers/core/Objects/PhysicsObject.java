@@ -42,23 +42,23 @@ public class PhysicsObject extends GenericObject {
 
     // Snap to bounds
     private void boundsCheck() {
-        if (getX() - getOriginX() * getScale() < 0) {
-            setX(getOriginX() * getScale());
+        if (getX() - getCollider().left < 0) {
+            setX(getCollider().left);
             speedX /= -friction;
         }
-        if (getX() - getOriginX() * getScale() + getCollider().width > SharedData.SCREEN_WIDTH) {
-            setX(SharedData.SCREEN_WIDTH - (float) getCollider().width + getOriginX() * getScale());
+        if (getX() + getCollider().right > SharedData.SCREEN_WIDTH) {
+            setX(SharedData.SCREEN_WIDTH - getCollider().right);
             speedX /= -friction;
         }
-        if (getY() - getOriginY() * getScale() + getCollider().height > SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET) {
-            setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET - getCollider().height + getOriginY() * getScale());
+        if (getY() + getCollider().down > SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET) {
+            setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET - getCollider().down);
             speedY = -speedY * bounce;
             speedX /= friction;
         }
     }
 
     public boolean isGrounded() {
-        return (getY() - getOriginY() * getScale() + getCollider().height >= SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET);
+        return (getY() + getCollider().down >= SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET);
     }
 
     float getSpeedX() {

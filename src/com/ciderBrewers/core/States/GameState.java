@@ -9,8 +9,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import java.awt.*;
-
 public class GameState extends BasicGameState {
 
     GameController gameController;
@@ -31,7 +29,7 @@ public class GameState extends BasicGameState {
         Ball ball = new Ball(SharedResources.getInstance().FAT_SPRITE);
 
         Player player1 = new Player(SharedResources.getInstance().VALIK_IDLE, SharedResources.getInstance().VALIK_WALK, SharedResources.getInstance().VALIK_JUMP, ball);
-        Player player2 = new Player(SharedResources.getInstance().MCKIDDO_IDLE, SharedResources.getInstance().MCKIDDO_WALK, SharedResources.getInstance().MCKIDDO_JUMP, ball);
+        Player player2 = new Player(SharedResources.getInstance().SILVER_WALK, SharedResources.getInstance().SILVER_WALK, SharedResources.getInstance().SILVER_JUMP, ball);
 
         gameController = new GameController(player1, player2, ball);
 
@@ -41,7 +39,7 @@ public class GameState extends BasicGameState {
         divider.setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET);
         divider.setOriginX(5);
         divider.setOriginY(220);
-        divider.setCollider(new Rectangle(0, 0, 10, 220));
+        divider.setCollider(new Collider(0, 0, 5, 220, 5, 0));
         SharedData.getInstance().genericObjects.add(divider);
 
         SharedData.getInstance().parallaxTarget = ball;

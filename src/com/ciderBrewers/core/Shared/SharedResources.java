@@ -1,5 +1,6 @@
 package com.ciderBrewers.core.Shared;
 
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.TrueTypeFont;
@@ -50,17 +51,27 @@ public class SharedResources {
     public SpriteSheet MCKIDDO_WALK;
     public SpriteSheet MCKIDDO_JUMP;
 
+    // SILVER
+    public SpriteSheet SILVER_IDLE;
+    public SpriteSheet SILVER_WALK;
+    public SpriteSheet SILVER_JUMP;
+
     // UI
     public SpriteSheet BATTLE_UI;
+    public SpriteSheet L_GOAL_UI;
+    public SpriteSheet R_GOAL_UI;
 
     // FONTS
     public TrueTypeFont BATTLE_UI_NAME;
     public TrueTypeFont BATTLE_UI_GOAL;
     public TrueTypeFont BATTLE_UI_SCORE;
 
+    // MUSIC
+    public Music MENU_MUSIC;
+
     private SharedResources() throws SlickException, IOException, FontFormatException {
         // Throws an exception but still loads picture.
-        //Todo: Fix it.
+        // Todo: Fix it.
         // DEBUG
         DEBUG_BACKGROUND_DYNAMIC_1 = new SpriteSheet("data/bg/bg_debug_1.png", 800, 600);
         DEBUG_BACKGROUND_DYNAMIC_2 = new SpriteSheet("data/bg/bg_debug_2.png", 800, 600);
@@ -68,14 +79,14 @@ public class SharedResources {
         DEBUG_BACKGROUND_DYNAMIC_4 = new SpriteSheet("data/bg/bg_debug_4.png", 800, 600);
         DEBUG_BACKGROUND_DYNAMIC_5 = new SpriteSheet("data/bg/bg_debug_5.png", 800, 600);
 
-        DEBUG_SPRITE = new SpriteSheet("data/spr/debug.png", 1, 1);
+        DEBUG_SPRITE = new SpriteSheet("data/spr/common/debug.png", 1, 1);
 
         // COMMON
-        SHADOW_SPRITE = new SpriteSheet("data/spr/shadow.png", 86, 37);
+        SHADOW_SPRITE = new SpriteSheet("data/spr/common/shadow.png", 86, 37);
 
         // BALLS
-        BALL_SPRITE = new SpriteSheet("data/spr/ball.png", 32, 32);
-        FAT_SPRITE = new SpriteSheet("data/spr/fat.png", 32, 32);
+        BALL_SPRITE = new SpriteSheet("data/spr/ball/ball.png", 32, 32);
+        FAT_SPRITE = new SpriteSheet("data/spr/ball/fat.png", 32, 32);
 
         // VALIK
         VALIK_IDLE = new SpriteSheet("data/spr/valik/idle.png", 36, 98);
@@ -87,8 +98,15 @@ public class SharedResources {
         MCKIDDO_WALK = new SpriteSheet("data/spr/mckiddo/walk.png", 36, 98);
         MCKIDDO_JUMP = new SpriteSheet("data/spr/mckiddo/jump.png", 36, 98);
 
+        // SILVER
+        //SILVER_IDLE = new SpriteSheet("data/spr/silver/idle.png", 100, 100);
+        SILVER_WALK = new SpriteSheet("data/spr/silver/walk.png", 100, 100);
+        SILVER_JUMP = new SpriteSheet("data/spr/silver/jump.png", 100, 100);
+
         // UI
         BATTLE_UI = new SpriteSheet("data/ui/battleUI.png", 800, 600);
+        L_GOAL_UI = new SpriteSheet("data/ui/lGoal.png", 800, 600);
+        R_GOAL_UI = new SpriteSheet("data/ui/rGoal.png", 800, 600);
 
         // FONTS
         Font font = new Font("Bahnschrift", Font.BOLD, 36).deriveFont(AffineTransform.getScaleInstance(.65, 1d));
@@ -99,6 +117,9 @@ public class SharedResources {
 
         font = new Font("Bahnschrift", Font.BOLD, 42);
         BATTLE_UI_SCORE = new TrueTypeFont(font, true);
+
+        // MUSIC
+        //MENU_MUSIC = new Music("data/music/menu.mp3");
     }
 
     public static SharedResources getInstance() {

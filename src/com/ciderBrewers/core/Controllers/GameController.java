@@ -4,6 +4,7 @@ import com.ciderBrewers.core.Objects.Ball;
 import com.ciderBrewers.core.Objects.Player;
 import com.ciderBrewers.core.Shared.SharedData;
 import com.ciderBrewers.core.Shared.SharedResources;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.TrueTypeFont;
@@ -22,6 +23,10 @@ public class GameController {
 
     private int gameState = SharedData.GAME_STATE_RUN;
 
+    private Animation battleUI;
+    private Animation lGoalUI;
+    private Animation rGoalUI;
+
     public GameController(Player player1, Player player2, Ball ball) {
         this.player1 = player1;
         this.player2 = player2;
@@ -29,6 +34,15 @@ public class GameController {
 
         player1.setX(SharedData.SCREEN_WIDTH - SharedData.STARTING_OFFSET);
         player2.setX(SharedData.STARTING_OFFSET);
+
+        battleUI = new Animation(SharedResources.getInstance().BATTLE_UI, 300);
+        lGoalUI = new Animation(SharedResources.getInstance().L_GOAL_UI, 30);
+        rGoalUI = new Animation(SharedResources.getInstance().R_GOAL_UI, 30);
+
+        lGoalUI.stop();
+        rGoalUI.stop();
+        lGoalUI.setLooping(false);
+        rGoalUI.setLooping(false);
     }
 
     public void update(GameContainer c, int delta) {
@@ -46,8 +60,10 @@ public class GameController {
             if (ball.isGrounded()) {
                 if (ball.getX() > SharedData.SCREEN_WIDTH / 2) {
                     playerScored(player1);
+                    lGoalUI.start();
                 } else {
                     playerScored(player2);
+                    rGoalUI.start();
                 }
             }
         } else if (gameState == SharedData.GAME_STATE_PAUSE_PHYSICS) {
@@ -82,12 +98,19 @@ public class GameController {
             ball.setSpeedX(0);
             ball.setSpeedY(0);
 
+            lGoalUI.restart();
+            rGoalUI.restart();
+            lGoalUI.stop();
+            rGoalUI.stop();
+
             gameState = SharedData.GAME_STATE_RUN;
         }
     }
 
     void drawBattleUI() {
-        SharedResources.getInstance().BATTLE_UI.draw(0, 0, SharedData.SCREEN_WIDTH, SharedData.SCREEN_HEIGHT);
+        battleUI.draw(0, 0, SharedData.SCREEN_WIDTH, SharedData.SCREEN_HEIGHT);
+        lGoalUI.draw(0, 0, SharedData.SCREEN_WIDTH, SharedData.SCREEN_HEIGHT);
+        rGoalUI.draw(0, 0, SharedData.SCREEN_WIDTH, SharedData.SCREEN_HEIGHT);
 
         TrueTypeFont nameFont = SharedResources.getInstance().BATTLE_UI_NAME;
         TrueTypeFont goalFont = SharedResources.getInstance().BATTLE_UI_GOAL;

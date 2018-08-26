@@ -5,8 +5,6 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SpriteSheet;
 
-import java.awt.*;
-
 public class Player extends PhysicsObject {
     public int nextStep = 0;
     public boolean jump = false;
@@ -38,11 +36,13 @@ public class Player extends PhysicsObject {
 
         setMaxSpeed(SharedData.MAX_PLAYER_SPEED);
 
-        setCollider(new Rectangle(
-                new Float(getX() - getOriginX() * getScale()).intValue(),
-                new Float(getY() - getOriginY() * getScale()).intValue(),
-                new Float(getSprite().getWidth() * getScale()).intValue(),
-                new Float(getSprite().getHeight() * getScale()).intValue()));
+        setCollider(new Collider(
+                getX(),
+                getY(),
+                15 * getScale(),
+                95 * getScale(),
+                15 * getScale(),
+                0 * getScale()));
         setSolid(true);
 
         setFriction(SharedData.PLAYER_FRICTION);
