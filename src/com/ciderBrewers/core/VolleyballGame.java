@@ -2,6 +2,7 @@ package com.ciderBrewers.core;
 
 import com.ciderBrewers.core.Shared.SharedData;
 import com.ciderBrewers.core.States.GameState;
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
@@ -26,6 +27,10 @@ public class VolleyballGame extends StateBasedGame {
             app.setIcon("data/spr/ball/fat.png");
             app.setDisplayMode(SharedData.SCREEN_WIDTH, SharedData.SCREEN_HEIGHT, false);
             app.setAlwaysRender(true);
+            app.setVSync(true);
+            app.setTargetFrameRate(Display.getDesktopDisplayMode().getFrequency());
+            app.setMaximumLogicUpdateInterval(5);
+            app.setShowFPS(false);
             app.start();
         } catch (SlickException ex) {
             Logger.getLogger(VolleyballGame.class.getName()).log(Level.SEVERE, null, ex);

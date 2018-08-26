@@ -2,6 +2,7 @@ package com.ciderBrewers.core.Objects;
 
 import com.ciderBrewers.core.Shared.SharedData;
 import com.ciderBrewers.core.Shared.SharedResources;
+import com.ciderBrewers.core.Utils.Collider;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.GameContainer;
 
@@ -28,8 +29,6 @@ public class GenericObject {
 
         if (getRotation() < 0) setRotation(getRotation() + 360);
         if (getRotation() >= 360) setRotation(getRotation() - 360);
-
-        if (sprite != null) sprite.update(delta);
     }
 
     // Draw object's sprite
@@ -107,7 +106,7 @@ public class GenericObject {
         this.reversed = reversed;
     }
 
-    Animation getSprite() {
+    public Animation getSprite() {
         return sprite;
     }
 

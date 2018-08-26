@@ -4,6 +4,7 @@ import com.ciderBrewers.core.Controllers.GameController;
 import com.ciderBrewers.core.Objects.*;
 import com.ciderBrewers.core.Shared.SharedData;
 import com.ciderBrewers.core.Shared.SharedResources;
+import com.ciderBrewers.core.Utils.Collider;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.BasicGameState;
@@ -26,10 +27,13 @@ public class GameState extends BasicGameState {
         new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_4, 1);
         new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_3, 0.9f);
 
-        Ball ball = new Ball(SharedResources.getInstance().FAT_SPRITE);
+        Ball ball = new Ball(0, 0, SharedResources.getInstance().FAT_SPRITE);
 
-        Player player1 = new Player(SharedResources.getInstance().VALIK_IDLE, SharedResources.getInstance().VALIK_WALK, SharedResources.getInstance().VALIK_JUMP, ball);
-        Player player2 = new Player(SharedResources.getInstance().SILVER_WALK, SharedResources.getInstance().SILVER_WALK, SharedResources.getInstance().SILVER_JUMP, ball);
+        SharedData.getInstance().player1Set = SharedResources.getInstance().VALIK_SET;
+        SharedData.getInstance().player2Set = SharedResources.getInstance().SILVER_SET;
+
+        Player player1 = new Player(SharedData.getInstance().player1Set, ball);
+        Player player2 = new Player(SharedData.getInstance().player2Set, ball);
 
         gameController = new GameController(player1, player2, ball);
 

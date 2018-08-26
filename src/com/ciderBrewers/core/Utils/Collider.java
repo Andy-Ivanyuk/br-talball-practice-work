@@ -1,4 +1,4 @@
-package com.ciderBrewers.core.Objects;
+package com.ciderBrewers.core.Utils;
 
 public class Collider {
     public float x;

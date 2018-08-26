@@ -11,6 +11,8 @@ public class PhysicsObject extends GenericObject {
     private float weight = 1;
     private float friction = SharedData.FRICTION;
     private float bounce = SharedData.BOUNCE;
+    private boolean physicsEnabled = true;
+    private boolean touchedWall = false;
 
     PhysicsObject() {
         //SharedData.getInstance().physicsObjects.add(this);
@@ -18,15 +20,17 @@ public class PhysicsObject extends GenericObject {
 
     // Overriding update to add move, gravity and rotation support.
     public void update(GameContainer c, int delta) {
-        speedY += SharedData.GRAVITY_ACCELERATION * weight * delta;
-        setX(getX() + speedX * delta);
-        setY(getY() + speedY * delta);
+        if (physicsEnabled) {
+            speedY += SharedData.GRAVITY_ACCELERATION * weight * delta;
+            setX(getX() + speedX * delta);
+            setY(getY() + speedY * delta);
 
-        clampSpeed();
+            clampSpeed();
 
-        boundsCheck();
+            boundsCheck();
 
-        setRotation(getRotation() + momentum * delta);
+            setRotation(getRotation() + momentum * delta);
+        }
 
         // Continue update (sync collider coordinates and clamp rotation)
         super.update(c, delta);
@@ -42,18 +46,22 @@ public class PhysicsObject extends GenericObject {
 
     // Snap to bounds
     private void boundsCheck() {
+        touchedWall = false;
         if (getX() - getCollider().left < 0) {
             setX(getCollider().left);
             speedX /= -friction;
+            touchedWall = true;
         }
         if (getX() + getCollider().right > SharedData.SCREEN_WIDTH) {
             setX(SharedData.SCREEN_WIDTH - getCollider().right);
             speedX /= -friction;
+            touchedWall = true;
         }
         if (getY() + getCollider().down > SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET) {
             setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET - getCollider().down);
             speedY = -speedY * bounce;
             speedX /= friction;
+            touchedWall = true;
         }
     }
 
@@ -115,5 +123,17 @@ public class PhysicsObject extends GenericObject {
 
     public void setBounce(float bounce) {
         this.bounce = bounce;
+    }
+
+    public boolean isPhysicsEnabled() {
+        return physicsEnabled;
+    }
+
+    public void setPhysicsEnabled(boolean physicsEnabled) {
+        this.physicsEnabled = physicsEnabled;
+    }
+
+    public boolean didTouchWall() {
+        return touchedWall;
     }
 }

@@ -1,9 +1,10 @@
 package com.ciderBrewers.core.Objects;
 
 import com.ciderBrewers.core.Shared.SharedData;
-import org.newdawn.slick.Animation;
+import com.ciderBrewers.core.Utils.Collider;
+import com.ciderBrewers.core.Utils.PlayerAnimationSet;
+import com.ciderBrewers.core.Utils.PlayerSet;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.SpriteSheet;
 
 public class Player extends PhysicsObject {
     public int nextStep = 0;
@@ -14,17 +15,16 @@ public class Player extends PhysicsObject {
 
     private GenericObject target;
 
-    private Animation animIdle;
-    private Animation animWalk;
-    private Animation animJump;
+    private PlayerAnimationSet animationSet;
 
-    public Player(SpriteSheet idleSheet, SpriteSheet walkSheet, SpriteSheet jumpSheet, GenericObject target) {
-        this.animIdle = new Animation(idleSheet, 300);
-        this.animWalk = new Animation(walkSheet, 300);
-        this.animJump = new Animation(jumpSheet, 300);
-        this.animJump.setLooping(false);
+    private String name;
 
-        setSprite(animIdle);
+    public Player(PlayerSet playerSet, GenericObject target) {
+        this.name = playerSet.name;
+
+        this.animationSet = new PlayerAnimationSet(playerSet);
+
+        setSprite(animationSet.idle);
 
         setY(SharedData.SCREEN_HEIGHT - SharedData.STARTING_OFFSET);
 
@@ -57,7 +57,7 @@ public class Player extends PhysicsObject {
     public void update(GameContainer c, int delta) {
         if (isGrounded() && jump) {
             setSpeedY(-jumpSpeed);
-            animJump.restart();
+            animationSet.jump.restart();
         }
 
         if (nextStep != 0) {
@@ -78,9 +78,12 @@ public class Player extends PhysicsObject {
 
     public void setAnimation() {
         if (isGrounded()) {
-            if (nextStep == 0) setSprite(animIdle);
-            else setSprite(animWalk);
-        } else setSprite(animJump);
+            if (nextStep == 0) {
+                setSprite(animationSet.idle);
+            } else {
+                setSprite(animationSet.walk);
+            }
+        } else setSprite(animationSet.jump);
     }
 
     public int getScore() {
@@ -89,5 +92,13 @@ public class Player extends PhysicsObject {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

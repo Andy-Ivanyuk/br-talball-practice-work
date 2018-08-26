@@ -1,6 +1,7 @@
 package com.ciderBrewers.core.Shared;
 
 import com.ciderBrewers.core.Objects.*;
+import com.ciderBrewers.core.Utils.PlayerSet;
 import org.newdawn.slick.Color;
 
 import java.util.ArrayList;
@@ -37,10 +38,15 @@ public class SharedData {
 
     public static final int PAUSE_TIME = 3;
 
+    public static final int SOUND_COOLDOWN_MS = 50;
+
     public static final org.newdawn.slick.Color COLOR_WHITESMOKE = new Color(245, 245, 245);
     public static final org.newdawn.slick.Color COLOR_BLACK = new Color(0, 0, 0);
 
     private static SharedData INSTANCE = new SharedData();
+
+    public PlayerSet player1Set;
+    public PlayerSet player2Set;
 
     public GenericObject parallaxTarget;
 

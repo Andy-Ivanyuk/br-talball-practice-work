@@ -1,13 +1,13 @@
 package com.ciderBrewers.core.Shared;
 
-import org.newdawn.slick.Music;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.TrueTypeFont;
+import com.ciderBrewers.core.Utils.PlayerSet;
+import org.newdawn.slick.*;
 
+import java.awt.Font;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class SharedResources {
 
@@ -41,33 +41,28 @@ public class SharedResources {
     public SpriteSheet BALL_SPRITE;
     public SpriteSheet FAT_SPRITE;
 
-    // VALIK
-    public SpriteSheet VALIK_IDLE;
-    public SpriteSheet VALIK_WALK;
-    public SpriteSheet VALIK_JUMP;
-
-    // MCKIDDO
-    public SpriteSheet MCKIDDO_IDLE;
-    public SpriteSheet MCKIDDO_WALK;
-    public SpriteSheet MCKIDDO_JUMP;
-
-    // SILVER
-    public SpriteSheet SILVER_IDLE;
-    public SpriteSheet SILVER_WALK;
-    public SpriteSheet SILVER_JUMP;
+    // Sprite sets
+    public PlayerSet VALIK_SET;
+    public PlayerSet MCKIDDO_SET;
+    public PlayerSet SILVER_SET;
 
     // UI
     public SpriteSheet BATTLE_UI;
     public SpriteSheet L_GOAL_UI;
     public SpriteSheet R_GOAL_UI;
+    public SpriteSheet PAUSE_UI;
 
-    // FONTS
+    // Fonts
     public TrueTypeFont BATTLE_UI_NAME;
     public TrueTypeFont BATTLE_UI_GOAL;
     public TrueTypeFont BATTLE_UI_SCORE;
 
-    // MUSIC
+    // Music
     public Music MENU_MUSIC;
+
+    // Sound lists
+    public ArrayList<Sound> BALL_PUNCH_SOUNDS = new ArrayList<>();
+    public ArrayList<Sound> BALL_WALL_SOUNDS = new ArrayList<>();
 
     private SharedResources() throws SlickException, IOException, FontFormatException {
         // Throws an exception but still loads picture.
@@ -88,25 +83,27 @@ public class SharedResources {
         BALL_SPRITE = new SpriteSheet("data/spr/ball/ball.png", 32, 32);
         FAT_SPRITE = new SpriteSheet("data/spr/ball/fat.png", 32, 32);
 
-        // VALIK
-        VALIK_IDLE = new SpriteSheet("data/spr/valik/idle.png", 36, 98);
-        VALIK_WALK = new SpriteSheet("data/spr/valik/walk.png", 36, 98);
-        VALIK_JUMP = new SpriteSheet("data/spr/valik/jump.png", 36, 98);
+        // Sprite sets
+        VALIK_SET = new PlayerSet("Valik",
+                new SpriteSheet("data/spr/valik/idle.png", 36, 98),
+                new SpriteSheet("data/spr/valik/walk.png", 36, 98),
+                new SpriteSheet("data/spr/valik/jump.png", 36, 98));
 
-        // MCKIDDO
-        MCKIDDO_IDLE = new SpriteSheet("data/spr/mckiddo/idle.png", 36, 98);
-        MCKIDDO_WALK = new SpriteSheet("data/spr/mckiddo/walk.png", 36, 98);
-        MCKIDDO_JUMP = new SpriteSheet("data/spr/mckiddo/jump.png", 36, 98);
+        MCKIDDO_SET = new PlayerSet("McKiddo",
+                new SpriteSheet("data/spr/mckiddo/idle.png", 36, 98),
+                new SpriteSheet("data/spr/mckiddo/walk.png", 36, 98),
+                new SpriteSheet("data/spr/mckiddo/jump.png", 36, 98));
 
-        // SILVER
-        //SILVER_IDLE = new SpriteSheet("data/spr/silver/idle.png", 100, 100);
-        SILVER_WALK = new SpriteSheet("data/spr/silver/walk.png", 100, 100);
-        SILVER_JUMP = new SpriteSheet("data/spr/silver/jump.png", 100, 100);
+        SILVER_SET = new PlayerSet("Silver",
+                new SpriteSheet("data/spr/silver/idle.png", 100, 100),
+                new SpriteSheet("data/spr/silver/walk.png", 100, 100),
+                new SpriteSheet("data/spr/silver/jump.png", 100, 100));
 
         // UI
         BATTLE_UI = new SpriteSheet("data/ui/battleUI.png", 800, 600);
         L_GOAL_UI = new SpriteSheet("data/ui/lGoal.png", 800, 600);
         R_GOAL_UI = new SpriteSheet("data/ui/rGoal.png", 800, 600);
+        PAUSE_UI = new SpriteSheet("data/ui/pauseUI.png", 800, 600);
 
         // FONTS
         Font font = new Font("Bahnschrift", Font.BOLD, 36).deriveFont(AffineTransform.getScaleInstance(.65, 1d));
@@ -118,8 +115,20 @@ public class SharedResources {
         font = new Font("Bahnschrift", Font.BOLD, 42);
         BATTLE_UI_SCORE = new TrueTypeFont(font, true);
 
-        // MUSIC
+        // Music
         //MENU_MUSIC = new Music("data/music/menu.mp3");
+
+        // Sounds
+        BALL_PUNCH_SOUNDS.add(new Sound("data/sounds/ball/punch/punch1.wav"));
+        BALL_PUNCH_SOUNDS.add(new Sound("data/sounds/ball/punch/punch2.wav"));
+        BALL_PUNCH_SOUNDS.add(new Sound("data/sounds/ball/punch/punch3.wav"));
+        BALL_PUNCH_SOUNDS.add(new Sound("data/sounds/ball/punch/punch4.wav"));
+        BALL_PUNCH_SOUNDS.add(new Sound("data/sounds/ball/punch/punch5.wav"));
+        BALL_PUNCH_SOUNDS.add(new Sound("data/sounds/ball/punch/punch6.wav"));
+
+        BALL_WALL_SOUNDS.add(new Sound("data/sounds/ball/wall/wall1.wav"));
+        BALL_WALL_SOUNDS.add(new Sound("data/sounds/ball/wall/wall2.wav"));
+        BALL_WALL_SOUNDS.add(new Sound("data/sounds/ball/wall/wall3.wav"));
     }
 
     public static SharedResources getInstance() {
