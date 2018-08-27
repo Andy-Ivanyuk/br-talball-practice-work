@@ -19,14 +19,16 @@ public class Player extends PhysicsObject {
 
     private String name;
 
-    public Player(PlayerSet playerSet, GenericObject target) {
+    private int side = 0;
+
+    public Player(PlayerSet playerSet, GenericObject target, int side) {
         this.name = playerSet.name;
 
         this.animationSet = new PlayerAnimationSet(playerSet);
 
         setSprite(animationSet.idle);
 
-        setY(SharedData.SCREEN_HEIGHT - SharedData.STARTING_OFFSET);
+        setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET);
 
         setOriginX((float) getSprite().getWidth() / 2);
         setOriginY(getSprite().getHeight());
@@ -49,6 +51,8 @@ public class Player extends PhysicsObject {
         setBounce(SharedData.PLAYER_BOUNCE);
 
         this.target = target;
+
+        this.side = side;
 
         SharedData.getInstance().players.add(this);
     }
@@ -73,7 +77,24 @@ public class Player extends PhysicsObject {
         if (getX() - target.getX() < 0) setReversed(false);
         else setReversed(true);
 
+        checkExtendedBounds();
+
         super.update(c, delta);
+    }
+
+    public void checkExtendedBounds() {
+        if (side == 1) {
+            if (getX() + getCollider().right > SharedData.SCREEN_WIDTH / 2) {
+                setX(SharedData.SCREEN_WIDTH / 2 - getCollider().right);
+                setSpeedX(getSpeedX() / -getFriction());
+            }
+        }
+        if (side == -1) {
+            if (getX() - getCollider().left < SharedData.SCREEN_WIDTH / 2) {
+                setX(SharedData.SCREEN_WIDTH / 2 + getCollider().left);
+                setSpeedX(getSpeedX() / -getFriction());
+            }
+        }
     }
 
     public void setAnimation() {

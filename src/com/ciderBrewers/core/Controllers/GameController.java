@@ -119,6 +119,11 @@ public class GameController {
             ball.setX((float) SharedData.SCREEN_WIDTH / 2);
             ball.setY(200);
 
+            player1.setX(SharedData.SCREEN_WIDTH - SharedData.STARTING_OFFSET);
+            player1.setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET);
+            player2.setX(SharedData.STARTING_OFFSET);
+            player2.setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET);
+
             if (lastScored == 1) ball.setX((float) SharedData.SCREEN_WIDTH / 2 + 150);
             if (lastScored == 2) ball.setX((float) SharedData.SCREEN_WIDTH / 2 - 150);
 

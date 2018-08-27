@@ -32,8 +32,8 @@ public class GameState extends BasicGameState {
         SharedData.getInstance().player1Set = SharedResources.getInstance().VALIK_SET;
         SharedData.getInstance().player2Set = SharedResources.getInstance().SILVER_SET;
 
-        Player player1 = new Player(SharedData.getInstance().player1Set, ball);
-        Player player2 = new Player(SharedData.getInstance().player2Set, ball);
+        Player player1 = new Player(SharedData.getInstance().player1Set, ball, -1);
+        Player player2 = new Player(SharedData.getInstance().player2Set, ball, 1);
 
         gameController = new GameController(player1, player2, ball);
 
