@@ -20,6 +20,8 @@ public class PhysicsObject extends GenericObject {
 
     // Overriding update to add move, gravity and rotation support.
     public void update(GameContainer c, int delta) {
+        touchedWall = false;
+
         if (physicsEnabled) {
             speedY += SharedData.GRAVITY_ACCELERATION * weight * delta;
             setX(getX() + speedX * delta);
@@ -46,7 +48,6 @@ public class PhysicsObject extends GenericObject {
 
     // Snap to bounds
     private void boundsCheck() {
-        touchedWall = false;
         if (getX() - getCollider().left < 0) {
             setX(getCollider().left);
             speedX /= -friction;
