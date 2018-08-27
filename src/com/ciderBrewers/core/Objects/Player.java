@@ -81,7 +81,8 @@ public class Player extends PhysicsObject {
             if (nextStep == 0) {
                 setSprite(animationSet.idle);
             } else {
-                setSprite(animationSet.walk);
+                if (nextStep > 0) setSprite(animationSet.walk);
+                else setSprite(animationSet.walkBack);
             }
         } else setSprite(animationSet.jump);
     }
