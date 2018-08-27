@@ -37,6 +37,14 @@ public class SharedResources {
     // COMMON
     public SpriteSheet SHADOW_SPRITE;
 
+    // Background
+    public SpriteSheet BACKGROUND_STADIUM_1;
+    public SpriteSheet BACKGROUND_STADIUM_2;
+    public SpriteSheet BACKGROUND_STADIUM_3;
+    public SpriteSheet BACKGROUND_STADIUM_4;
+    public SpriteSheet BACKGROUND_STADIUM_5;
+    public SpriteSheet BACKGROUND_STADIUM_6;
+
     // BALLS
     public SpriteSheet BALL_SPRITE;
     public SpriteSheet FAT_SPRITE;
@@ -68,16 +76,24 @@ public class SharedResources {
         // Throws an exception but still loads picture.
         // Todo: Fix it.
         // DEBUG
-        DEBUG_BACKGROUND_DYNAMIC_1 = new SpriteSheet("data/bg/bg_debug_1.png", 800, 600);
-        DEBUG_BACKGROUND_DYNAMIC_2 = new SpriteSheet("data/bg/bg_debug_2.png", 800, 600);
-        DEBUG_BACKGROUND_DYNAMIC_3 = new SpriteSheet("data/bg/bg_debug_3.png", 800, 600);
-        DEBUG_BACKGROUND_DYNAMIC_4 = new SpriteSheet("data/bg/bg_debug_4.png", 800, 600);
-        DEBUG_BACKGROUND_DYNAMIC_5 = new SpriteSheet("data/bg/bg_debug_5.png", 800, 600);
+        DEBUG_BACKGROUND_DYNAMIC_1 = new SpriteSheet("data/background/bg_debug_1.png", 800, 600);
+        DEBUG_BACKGROUND_DYNAMIC_2 = new SpriteSheet("data/background/bg_debug_2.png", 800, 600);
+        DEBUG_BACKGROUND_DYNAMIC_3 = new SpriteSheet("data/background/bg_debug_3.png", 800, 600);
+        DEBUG_BACKGROUND_DYNAMIC_4 = new SpriteSheet("data/background/bg_debug_4.png", 800, 600);
+        DEBUG_BACKGROUND_DYNAMIC_5 = new SpriteSheet("data/background/bg_debug_5.png", 800, 600);
 
         DEBUG_SPRITE = new SpriteSheet("data/spr/common/debug.png", 1, 1);
 
         // COMMON
         SHADOW_SPRITE = new SpriteSheet("data/spr/common/shadow.png", 86, 37);
+
+        // Backgrounds
+        BACKGROUND_STADIUM_1 = new SpriteSheet("data/background/stadium/1.png", 800, 600);
+        BACKGROUND_STADIUM_2 = new SpriteSheet("data/background/stadium/2.png", 800, 600);
+        BACKGROUND_STADIUM_3 = new SpriteSheet("data/background/stadium/3.png", 800, 600);
+        BACKGROUND_STADIUM_4 = new SpriteSheet("data/background/stadium/4.png", 800, 600);
+        BACKGROUND_STADIUM_5 = new SpriteSheet("data/background/stadium/5.png", 800, 600);
+        BACKGROUND_STADIUM_6 = new SpriteSheet("data/background/stadium/6.png", 800, 600);
 
         // BALLS
         BALL_SPRITE = new SpriteSheet("data/spr/ball/ball.png", 32, 32);

@@ -37,7 +37,7 @@ public class GameController {
         player1.setX(SharedData.SCREEN_WIDTH - SharedData.STARTING_OFFSET);
         player2.setX(SharedData.STARTING_OFFSET);
 
-        ball.setX(SharedData.SCREEN_WIDTH / 2);
+        ball.setX((float) SharedData.SCREEN_WIDTH / 2);
         ball.setY(200);
 
         battleUI = new Animation(SharedResources.getInstance().BATTLE_UI, 300);
@@ -121,8 +121,17 @@ public class GameController {
 
             player1.setX(SharedData.SCREEN_WIDTH - SharedData.STARTING_OFFSET);
             player1.setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET);
+            player1.setSpeedX(0);
+            player1.setSpeedY(0);
+            player1.nextStep = 0;
+            player1.jump = false;
+
             player2.setX(SharedData.STARTING_OFFSET);
             player2.setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET);
+            player2.setSpeedX(0);
+            player2.setSpeedY(0);
+            player2.nextStep = 0;
+            player2.jump = false;
 
             if (lastScored == 1) ball.setX((float) SharedData.SCREEN_WIDTH / 2 + 150);
             if (lastScored == 2) ball.setX((float) SharedData.SCREEN_WIDTH / 2 - 150);

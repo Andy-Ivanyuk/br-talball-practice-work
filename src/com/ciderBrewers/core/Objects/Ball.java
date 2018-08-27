@@ -15,6 +15,7 @@ public class Ball extends PhysicsObject {
     ArrayList<Sound> punchSounds = new ArrayList<>();
     ArrayList<Sound> wallSounds = new ArrayList<>();
     long lastTouch = 0;
+    boolean touchEnabled = true;
 
     public Ball(float x, float y, SpriteSheet spriteSheet) {
         setSprite(new Animation(spriteSheet, 100));
@@ -43,31 +44,33 @@ public class Ball extends PhysicsObject {
 
     //Overriding update to check for player collision and create momentum.
     public void update(GameContainer c, int delta) {
-        // Check for player collision
-        for (Player player : SharedData.getInstance().players) {
-            if (getCollider().intersects(player.getCollider())) {
-                playPunchSound();
-                setPhysicsEnabled(true);
+        if (touchEnabled) {
+            // Check for player collision
+            for (Player player : SharedData.getInstance().players) {
+                if (getCollider().intersects(player.getCollider())) {
+                    playPunchSound();
+                    setPhysicsEnabled(true);
 
-                int direction = 1;
-                if (getX() - player.getX() < 0) direction = -1;
+                    int direction = 1;
+                    if (getX() - player.getX() < 0) direction = -1;
 
-                setSpeedX(getSpeedX() + SharedData.PLAYER_HORIZONTAL_FORCE * direction * delta);
-                setSpeedY(getSpeedY() - SharedData.PLAYER_VERTICAL_FORCE * delta);
+                    setSpeedX(getSpeedX() + SharedData.PLAYER_HORIZONTAL_FORCE * direction * delta);
+                    setSpeedY(getSpeedY() - SharedData.PLAYER_VERTICAL_FORCE * delta);
 
-                lastTouch = System.currentTimeMillis();
+                    lastTouch = System.currentTimeMillis();
+                }
             }
-        }
-        for (GenericObject object : SharedData.getInstance().genericObjects) {
-            if (getCollider().intersects(object.getCollider())) {
-                playWallSound();
-                float horizontalDelta = getCollider().x - getCollider().left - object.getCollider().x - object.getCollider().left;
-                float verticalDelta = getCollider().y - getCollider().up - object.getCollider().y - object.getCollider().up;
+            for (GenericObject object : SharedData.getInstance().genericObjects) {
+                if (getCollider().intersects(object.getCollider())) {
+                    playWallSound();
+                    float horizontalDelta = getCollider().x - getCollider().left - object.getCollider().x - object.getCollider().left;
+                    float verticalDelta = getCollider().y - getCollider().up - object.getCollider().y - object.getCollider().up;
 
-                if (verticalDelta < 0) setSpeedY(-getSpeedY() / SharedData.FRICTION);
-                else setSpeedX(-getSpeedX() / SharedData.FRICTION);
+                    if (verticalDelta < 0) setSpeedY(-getSpeedY() / SharedData.FRICTION);
+                    else setSpeedX(-getSpeedX() / SharedData.FRICTION);
 
-                lastTouch = System.currentTimeMillis();
+                    lastTouch = System.currentTimeMillis();
+                }
             }
         }
 

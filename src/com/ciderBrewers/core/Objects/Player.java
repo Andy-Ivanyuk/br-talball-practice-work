@@ -34,7 +34,7 @@ public class Player extends PhysicsObject {
         setOriginY(getSprite().getHeight());
 
         setScale(SharedData.PLAYER_SCALE);
-        setWeight(SharedData.PLAYER_WEIGTH);
+        setWeight(SharedData.PLAYER_WEIGHT);
 
         setMaxSpeed(SharedData.MAX_PLAYER_SPEED);
 

@@ -21,11 +21,20 @@ public class GameState extends BasicGameState {
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) {
+        /*
         new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_1, 4);
         new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_2, 5);
         new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_5, 1.1f);
         new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_4, 1);
         new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_3, 0.9f);
+        */
+
+        new ParallaxBackground(SharedResources.getInstance().BACKGROUND_STADIUM_6, 5f);
+        new ParallaxBackground(SharedResources.getInstance().BACKGROUND_STADIUM_5, 2f);
+        new ParallaxBackground(SharedResources.getInstance().BACKGROUND_STADIUM_4, 1.5f);
+        new ParallaxBackground(SharedResources.getInstance().BACKGROUND_STADIUM_1, 1.1f);
+        new ParallaxBackground(SharedResources.getInstance().BACKGROUND_STADIUM_2, 1f);
+        new ParallaxBackground(SharedResources.getInstance().BACKGROUND_STADIUM_3, 0.9f);
 
         Ball ball = new Ball(0, 0, SharedResources.getInstance().FAT_SPRITE);
 
@@ -53,11 +62,14 @@ public class GameState extends BasicGameState {
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) {
         float[] parallaxOffset = SharedData.getInstance().parallaxTarget.getParallaxOffset();
 
-        for (ParallaxBackground object : SharedData.getInstance().backgrounds) object.draw(parallaxOffset);
+        for (ParallaxBackground object : SharedData.getInstance().backgrounds)
+            if (object.getDepth() >= 1) object.draw(parallaxOffset);
         for (GenericObject object : SharedData.getInstance().genericObjects) object.draw(parallaxOffset);
         for (PhysicsObject object : SharedData.getInstance().physicsObjects) object.draw(parallaxOffset);
         for (Player object : SharedData.getInstance().players) object.draw(parallaxOffset);
         for (Ball object : SharedData.getInstance().balls) object.draw(parallaxOffset);
+        for (ParallaxBackground object : SharedData.getInstance().backgrounds)
+            if (object.getDepth() < 1) object.draw(parallaxOffset);
 
         gameController.draw();
     }
