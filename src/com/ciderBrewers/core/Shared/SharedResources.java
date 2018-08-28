@@ -101,10 +101,10 @@ public class SharedResources {
 
         // Sprite sets
         VALIK_SET = new PlayerSet("Valik",
-                new SpriteSheet("data/spr/valik/idle.png", 36, 98),
-                new SpriteSheet("data/spr/valik/walk.png", 36, 98),
-                new SpriteSheet("data/spr/valik/walk.png", 36, 98),
-                new SpriteSheet("data/spr/valik/jump.png", 36, 98));
+                new SpriteSheet("data/spr/valik/idle.png", 100, 100),
+                new SpriteSheet("data/spr/valik/walk.png", 100, 100),
+                new SpriteSheet("data/spr/valik/walk_back.png", 100, 100),
+                new SpriteSheet("data/spr/valik/jump.png", 100, 100));
 
         MCKIDDO_SET = new PlayerSet("McKiddo",
                 new SpriteSheet("data/spr/mckiddo/idle.png", 36, 98),

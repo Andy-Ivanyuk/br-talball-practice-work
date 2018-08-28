@@ -9,10 +9,7 @@ public class ParallaxBackground {
     private float depth;
 
     public ParallaxBackground(SpriteSheet spriteSheet, float depth) {
-        this.sprite = new Animation(spriteSheet, 10);
-
-        this.sprite.setPingPong(true);
-        this.sprite.setLooping(false);
+        this.sprite = new Animation(spriteSheet, 300);
 
         this.depth = depth;
 

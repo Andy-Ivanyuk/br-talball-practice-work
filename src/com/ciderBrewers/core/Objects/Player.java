@@ -102,7 +102,9 @@ public class Player extends PhysicsObject {
             if (nextStep == 0) {
                 setSprite(animationSet.idle);
             } else {
-                if (nextStep > 0) setSprite(animationSet.walk);
+                int modifier = 1;
+                if (isReversed()) modifier = -1;
+                if (nextStep * modifier > 0) setSprite(animationSet.walk);
                 else setSprite(animationSet.walkBack);
             }
         } else setSprite(animationSet.jump);
