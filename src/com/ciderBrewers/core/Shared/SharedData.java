@@ -35,9 +35,13 @@ public class SharedData {
     public static final int GAME_STATE_RUN = 0;
     public static final int GAME_STATE_PAUSE = 1;
     public static final int GAME_STATE_PAUSE_PHYSICS = 2;
+    public static final int GAME_STATE_PAUSE_GOAL = 3;
+    public static final int GAME_STATE_PAUSE_GAME_END = 4;
 
     public static final int PAUSE_TIME = 3;
 
+    public static final int BALL_COOLDOWN_MS = 1000;
+    public static final int BALL_COOLDOWN_FLASH_CYCLE_FRAMES = 50;
     public static final int SOUND_COOLDOWN_MS = 50;
 
     public static final org.newdawn.slick.Color COLOR_WHITESMOKE = new Color(245, 245, 245);

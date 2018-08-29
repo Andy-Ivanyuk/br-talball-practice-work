@@ -28,7 +28,7 @@ public class VolleyballGame extends StateBasedGame {
             app.setDisplayMode(SharedData.SCREEN_WIDTH, SharedData.SCREEN_HEIGHT, false);
             app.setAlwaysRender(true);
             app.setVSync(true);
-            app.setTargetFrameRate(Display.getDesktopDisplayMode().getFrequency());
+            app.setTargetFrameRate(Display.getDesktopDisplayMode().getFrequency() * 2);
             app.setMaximumLogicUpdateInterval(5);
             app.setShowFPS(false);
             app.start();

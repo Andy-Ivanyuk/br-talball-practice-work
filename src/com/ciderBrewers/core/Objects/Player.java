@@ -9,8 +9,6 @@ import org.newdawn.slick.GameContainer;
 public class Player extends PhysicsObject {
     public int nextStep = 0;
     public boolean jump = false;
-    private float stepMultiplier = SharedData.PLAYER_WALK_SPEED;
-    private float jumpSpeed = SharedData.PLAYER_JUMP_SPEED;
     private int score = 0;
 
     private GenericObject target;
@@ -45,7 +43,6 @@ public class Player extends PhysicsObject {
                 95 * getScale(),
                 15 * getScale(),
                 0 * getScale()));
-        setSolid(true);
 
         setFriction(SharedData.PLAYER_FRICTION);
         setBounce(SharedData.PLAYER_BOUNCE);
@@ -60,12 +57,12 @@ public class Player extends PhysicsObject {
     // Overriding update to process controller commands and calculate sprite facing
     public void update(GameContainer c, int delta) {
         if (isGrounded() && jump) {
-            setSpeedY(-jumpSpeed);
+            setSpeedY(-SharedData.PLAYER_JUMP_SPEED);
             animationSet.jump.restart();
         }
 
         if (nextStep != 0) {
-            float deltaX = nextStep * stepMultiplier * delta;
+            float deltaX = nextStep * SharedData.PLAYER_WALK_SPEED * delta;
             setX(getX() + deltaX);
         }
 

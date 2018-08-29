@@ -16,6 +16,8 @@ public class Ball extends PhysicsObject {
     ArrayList<Sound> wallSounds = new ArrayList<>();
     long lastTouch = 0;
     boolean touchEnabled = true;
+    long collisionTimer = 0;
+    int frame = 0;
 
     public Ball(float x, float y, SpriteSheet spriteSheet) {
         setSprite(new Animation(spriteSheet, 100));
@@ -32,7 +34,6 @@ public class Ball extends PhysicsObject {
                 getSprite().getWidth() * getScale() / 2,
                 getSprite().getHeight() * getScale() / 2,
                 getSprite().getHeight() * getScale() / 2));
-        setSolid(true);
 
         setPhysicsEnabled(false);
 
@@ -60,19 +61,83 @@ public class Ball extends PhysicsObject {
                     lastTouch = System.currentTimeMillis();
                 }
             }
+
             for (GenericObject object : SharedData.getInstance().genericObjects) {
                 if (getCollider().intersects(object.getCollider())) {
                     playWallSound();
+                    /*
                     float horizontalDelta = getCollider().x - getCollider().left - object.getCollider().x - object.getCollider().left;
                     float verticalDelta = getCollider().y - getCollider().up - object.getCollider().y - object.getCollider().up;
 
                     if (verticalDelta < 0) setSpeedY(-getSpeedY() / SharedData.FRICTION);
                     else setSpeedX(-getSpeedX() / SharedData.FRICTION);
+                    */
+
+                    boolean left = false;
+                    boolean right = false;
+                    boolean top = false;
+                    boolean bottom = false;
+
+                    if (object.getCollider().intersectsLine(
+                            getCollider().x - getCollider().left,
+                            getCollider().y - getCollider().up,
+                            getCollider().x - getCollider().left,
+                            getCollider().y + getCollider().down))
+                        left = true;
+                    if (object.getCollider().intersectsLine(
+                            getCollider().x + getCollider().right,
+                            getCollider().y - getCollider().up,
+                            getCollider().x + getCollider().right,
+                            getCollider().y + getCollider().down))
+                        right = true;
+                    if (object.getCollider().intersectsLine(
+                            getCollider().x - getCollider().left,
+                            getCollider().y - getCollider().up,
+                            getCollider().x + getCollider().right,
+                            getCollider().y - getCollider().up))
+                        top = true;
+                    if (object.getCollider().intersectsLine(
+                            getCollider().x - getCollider().left,
+                            getCollider().y + getCollider().down,
+                            getCollider().x + getCollider().right,
+                            getCollider().y + getCollider().down))
+                        bottom = true;
+
+                    if (left || right) {
+                        if (left)
+                            setX(getX() - ((getCollider().x - getCollider().left) - (object.getCollider().x + object.getCollider().right)));
+                        if (right)
+                            setX(getX() + ((object.getCollider().x - object.getCollider().left) - (getCollider().x + getCollider().right)));
+                        setSpeedX(-getSpeedX() / SharedData.FRICTION);
+                    } else {
+                        if (bottom)
+                            setY(getY() + ((object.getCollider().y - object.getCollider().up) - (getCollider().y + getCollider().down)));
+                        if (top)
+                            setY(getY() - ((getCollider().y - getCollider().up) - (object.getCollider().y + object.getCollider().down)));
+                        setSpeedY(-getSpeedY() / SharedData.FRICTION);
+                    }
 
                     lastTouch = System.currentTimeMillis();
                 }
             }
         }
+
+        if (collisionTimer != 0) {
+            if (System.currentTimeMillis() - collisionTimer < SharedData.BALL_COOLDOWN_MS) {
+                if (frame <= SharedData.BALL_COOLDOWN_FLASH_CYCLE_FRAMES / 2) {
+                    setVisible(false);
+                } else {
+                    setVisible(true);
+                }
+            } else {
+                setVisible(true);
+                setTouchEnabled(true);
+                collisionTimer = 0;
+            }
+        }
+
+        frame += 1;
+        if (frame == SharedData.BALL_COOLDOWN_FLASH_CYCLE_FRAMES) frame -= SharedData.BALL_COOLDOWN_FLASH_CYCLE_FRAMES;
 
         // Creating momentum based on player x-speed.
         setMomentum(getSpeedX());
@@ -97,5 +162,18 @@ public class Ball extends PhysicsObject {
             int index = (int) (Math.random() * wallSounds.size());
             wallSounds.get(index).play();
         }
+    }
+
+    public void startCollisionTimer() {
+        collisionTimer = System.currentTimeMillis();
+        frame = 0;
+    }
+
+    public boolean isTouchEnabled() {
+        return touchEnabled;
+    }
+
+    public void setTouchEnabled(boolean touchEnabled) {
+        this.touchEnabled = touchEnabled;
     }
 }

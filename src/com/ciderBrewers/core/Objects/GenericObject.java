@@ -15,7 +15,7 @@ public class GenericObject {
     private float originX = 0;
     private float originY = 0;
     private float scale = 1f;
-    private boolean isSolid = false;
+    private boolean visible = true;
     private Collider collider;
 
     public GenericObject() {
@@ -41,7 +41,7 @@ public class GenericObject {
                 collider.getWidth(),
                 collider.getHeight());
         */
-        if (getSprite() != null) {
+        if (visible && getSprite() != null) {
             int side = reversed ? -1 : 1;
 
             if (reversed) getSprite().getCurrentFrame().setCenterOfRotation(-originX * scale, originY * scale);
@@ -146,11 +146,11 @@ public class GenericObject {
         this.collider = collider;
     }
 
-    boolean isSolid() {
-        return isSolid;
+    boolean isVisible() {
+        return visible;
     }
 
-    void setSolid(boolean solid) {
-        isSolid = solid;
+    void setVisible(boolean visible) {
+        this.visible = visible;
     }
 }

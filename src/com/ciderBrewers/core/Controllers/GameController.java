@@ -77,17 +77,17 @@ public class GameController {
 
             if (ball.isGrounded()) {
                 if (ball.getX() > SharedData.SCREEN_WIDTH / 2) {
-                    playerScored(player1);
+                    playerScored(player1, player2);
                     lastScored = 1;
                     lGoalUI.start();
                 } else {
-                    playerScored(player2);
+                    playerScored(player2, player1);
                     lastScored = 2;
                     rGoalUI.start();
                 }
             }
-        } else if (gameState == SharedData.GAME_STATE_PAUSE_PHYSICS) {
-            checkForScorePauseEnd();
+        } else {
+            checkForPauseEnd();
         }
     }
 
@@ -95,10 +95,19 @@ public class GameController {
         drawBattleUI();
     }
 
-    void playerScored(Player player) {
-        gameState = SharedData.GAME_STATE_PAUSE_PHYSICS;
+    void playerScored(Player winnerPlayer, Player loserPlayer) {
+        winnerPlayer.setScore(winnerPlayer.getScore() + 1);
 
-        player.setScore(player.getScore() + 1);
+        ball.setTouchEnabled(false);
+
+        if (winnerPlayer.getScore() >= 10) {
+            gameState = SharedData.GAME_STATE_PAUSE_GAME_END;
+        } else {
+            gameState = SharedData.GAME_STATE_PAUSE_GOAL;
+
+            winnerPlayer.getSprite().stop();
+            loserPlayer.getSprite().stop();
+        }
 
         lastPauseTime = System.currentTimeMillis();
     }
@@ -111,39 +120,53 @@ public class GameController {
         this.gameState = gameState;
     }
 
-    public void checkForScorePauseEnd() {
-        if (System.currentTimeMillis() - lastPauseTime > SharedData.PAUSE_TIME * 1000) {
-            ball.setSpeedX(0);
-            ball.setSpeedY(0);
+    public void checkForPauseEnd() {
+        switch (gameState) {
+            case SharedData.GAME_STATE_PAUSE:
+                break;
+            case SharedData.GAME_STATE_PAUSE_PHYSICS:
+                break;
+            case SharedData.GAME_STATE_PAUSE_GOAL: {
+                if (System.currentTimeMillis() - lastPauseTime > SharedData.PAUSE_TIME * 1000) {
+                    ball.setSpeedX(0);
+                    ball.setSpeedY(0);
 
-            ball.setX((float) SharedData.SCREEN_WIDTH / 2);
-            ball.setY(200);
+                    ball.setX((float) SharedData.SCREEN_WIDTH / 2);
+                    ball.setY(200);
 
-            player1.setX(SharedData.SCREEN_WIDTH - SharedData.STARTING_OFFSET);
-            player1.setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET);
-            player1.setSpeedX(0);
-            player1.setSpeedY(0);
-            player1.nextStep = 0;
-            player1.jump = false;
+                    player1.getSprite().start();
+                    player2.getSprite().start();
 
-            player2.setX(SharedData.STARTING_OFFSET);
-            player2.setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET);
-            player2.setSpeedX(0);
-            player2.setSpeedY(0);
-            player2.nextStep = 0;
-            player2.jump = false;
+                    player1.setX(SharedData.SCREEN_WIDTH - SharedData.STARTING_OFFSET);
+                    player1.setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET);
+                    player1.setSpeedX(0);
+                    player1.setSpeedY(0);
+                    player1.nextStep = 0;
+                    player1.jump = false;
 
-            if (lastScored == 1) ball.setX((float) SharedData.SCREEN_WIDTH / 2 + 150);
-            if (lastScored == 2) ball.setX((float) SharedData.SCREEN_WIDTH / 2 - 150);
+                    player2.setX(SharedData.STARTING_OFFSET);
+                    player2.setY(SharedData.SCREEN_HEIGHT - SharedData.GROUND_OFFSET);
+                    player2.setSpeedX(0);
+                    player2.setSpeedY(0);
+                    player2.nextStep = 0;
+                    player2.jump = false;
 
-            ball.setPhysicsEnabled(false);
+                    if (lastScored == 1) ball.setX((float) SharedData.SCREEN_WIDTH / 2 + 150);
+                    if (lastScored == 2) ball.setX((float) SharedData.SCREEN_WIDTH / 2 - 150);
 
-            lGoalUI.restart();
-            rGoalUI.restart();
-            lGoalUI.stop();
-            rGoalUI.stop();
+                    ball.setPhysicsEnabled(false);
+                    ball.startCollisionTimer();
 
-            gameState = SharedData.GAME_STATE_RUN;
+                    lGoalUI.restart();
+                    rGoalUI.restart();
+                    lGoalUI.stop();
+                    rGoalUI.stop();
+
+                    gameState = SharedData.GAME_STATE_RUN;
+                }
+            }
+            case SharedData.GAME_STATE_PAUSE_GAME_END:
+                break;
         }
     }
 
