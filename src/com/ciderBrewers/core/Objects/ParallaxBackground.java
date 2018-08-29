@@ -17,12 +17,16 @@ public class ParallaxBackground {
     }
 
     public void draw(float[] parallaxOffset) {
-        sprite.draw(
-                -SharedData.PARALLAX_VALUE - parallaxOffset[0] / depth,
-                -SharedData.PARALLAX_VALUE - parallaxOffset[1] / depth,
-                SharedData.SCREEN_WIDTH + SharedData.PARALLAX_VALUE * 2,
-                SharedData.SCREEN_HEIGHT + SharedData.PARALLAX_VALUE * 2
-        );
+        if (parallaxOffset != null) {
+            sprite.draw(
+                    -SharedData.PARALLAX_VALUE - parallaxOffset[0] / depth,
+                    -SharedData.PARALLAX_VALUE - parallaxOffset[1] / depth,
+                    SharedData.SCREEN_WIDTH + SharedData.PARALLAX_VALUE * 2,
+                    SharedData.SCREEN_HEIGHT + SharedData.PARALLAX_VALUE * 2
+            );
+        } else {
+            sprite.draw(0, 0, SharedData.SCREEN_WIDTH, SharedData.SCREEN_HEIGHT);
+        }
     }
 
     public Animation getSprite() {

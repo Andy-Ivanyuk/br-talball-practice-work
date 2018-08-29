@@ -16,19 +16,15 @@ public class GameState extends BasicGameState {
 
     @Override
     public int getID() {
-        return 1;
+        return 2;
     }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) {
-        /*
-        new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_1, 4);
-        new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_2, 5);
-        new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_5, 1.1f);
-        new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_4, 1);
-        new ParallaxBackground(SharedResources.getInstance().DEBUG_BACKGROUND_DYNAMIC_3, 0.9f);
-        */
+    }
 
+    @Override
+    public void enter(GameContainer gameContainer, StateBasedGame stateBasedGame) {
         new ParallaxBackground(SharedResources.getInstance().BACKGROUND_STADIUM_6, 5f);
         new ParallaxBackground(SharedResources.getInstance().BACKGROUND_STADIUM_5, 2f);
         new ParallaxBackground(SharedResources.getInstance().BACKGROUND_STADIUM_4, 1.5f);
@@ -37,9 +33,6 @@ public class GameState extends BasicGameState {
         new ParallaxBackground(SharedResources.getInstance().BACKGROUND_STADIUM_3, 0.9f);
 
         Ball ball = new Ball(0, 0, SharedResources.getInstance().FAT_SPRITE);
-
-        SharedData.getInstance().player1Set = SharedResources.getInstance().VALIK_SET;
-        SharedData.getInstance().player2Set = SharedResources.getInstance().SILVER_SET;
 
         Player player1 = new Player(SharedData.getInstance().player1Set, ball, -1);
         Player player2 = new Player(SharedData.getInstance().player2Set, ball, 1);
@@ -76,9 +69,9 @@ public class GameState extends BasicGameState {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) {
-        gameController.update(gameContainer, delta);
+        gameController.update(gameContainer, stateBasedGame, delta);
 
-        if (gameController.getGameState() == SharedData.GAME_STATE_RUN) {
+        if (gameController.getGameState() == SharedData.GAME_STATE_RUN || gameController.getGameState() == SharedData.GAME_STATE_PAUSE_GOAL) {
             for (GenericObject object : SharedData.getInstance().genericObjects) object.update(gameContainer, delta);
             for (PhysicsObject object : SharedData.getInstance().physicsObjects) object.update(gameContainer, delta);
             for (Player object : SharedData.getInstance().players) object.update(gameContainer, delta);

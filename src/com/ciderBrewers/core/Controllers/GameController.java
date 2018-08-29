@@ -4,18 +4,13 @@ import com.ciderBrewers.core.Objects.Ball;
 import com.ciderBrewers.core.Objects.Player;
 import com.ciderBrewers.core.Shared.SharedData;
 import com.ciderBrewers.core.Shared.SharedResources;
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class GameController {
     private Ball ball;
     private Player player1;
     private Player player2;
-    private int leftWalk;
-    private int rightWalk;
-    private int jump;
 
     private int goal = 10;
 
@@ -28,6 +23,11 @@ public class GameController {
     private Animation lGoalUI;
     private Animation rGoalUI;
     private Animation pauseUI;
+
+    private Sound ambience = SharedResources.getInstance().GAME_AMBIENCE;
+    private Music music = SharedResources.getInstance().GAME_MUSIC;
+
+    private Sound whistle = SharedResources.getInstance().GAME_WHISTLE;
 
     public GameController(Player player1, Player player2, Ball ball) {
         this.player1 = player1;
@@ -49,9 +49,13 @@ public class GameController {
         rGoalUI.stop();
         lGoalUI.setLooping(false);
         rGoalUI.setLooping(false);
+
+        ambience.loop();
+        music.loop();
+        whistle.play();
     }
 
-    public void update(GameContainer c, int delta) {
+    public void update(GameContainer c, StateBasedGame stateBasedGame, int delta) {
         Input input = c.getInput();
 
         if (input.isKeyPressed(Input.KEY_ESCAPE)) {
@@ -66,7 +70,7 @@ public class GameController {
             }
         }
 
-        if (gameState == SharedData.GAME_STATE_RUN) {
+        if (gameState == SharedData.GAME_STATE_RUN || gameState == SharedData.GAME_STATE_PAUSE_GOAL) {
             if (input.isKeyDown(Input.KEY_LEFT)) player1.nextStep -= 1;
             if (input.isKeyDown(Input.KEY_RIGHT)) player1.nextStep += 1;
             if (input.isKeyDown(Input.KEY_UP)) player1.jump = true;
@@ -75,7 +79,7 @@ public class GameController {
             if (input.isKeyDown(Input.KEY_D)) player2.nextStep += 1;
             if (input.isKeyDown(Input.KEY_W)) player2.jump = true;
 
-            if (ball.isGrounded()) {
+            if (gameState != SharedData.GAME_STATE_PAUSE_GOAL && ball.isGrounded()) {
                 if (ball.getX() > SharedData.SCREEN_WIDTH / 2) {
                     playerScored(player1, player2);
                     lastScored = 1;
@@ -85,14 +89,37 @@ public class GameController {
                     lastScored = 2;
                     rGoalUI.start();
                 }
+                whistle.play();
             }
-        } else {
-            checkForPauseEnd();
         }
+        if (gameState != SharedData.GAME_STATE_RUN) checkForPauseEnd();
     }
 
     public void draw() {
-        drawBattleUI();
+        battleUI.draw();
+        lGoalUI.draw();
+        rGoalUI.draw();
+
+        TrueTypeFont nameFont = SharedResources.getInstance().BATTLE_UI_NAME;
+        TrueTypeFont goalFont = SharedResources.getInstance().BATTLE_UI_GOAL;
+        TrueTypeFont scoreFont = SharedResources.getInstance().BATTLE_UI_SCORE;
+
+        nameFont.drawString(40.0f, 16.0f, player2.getName(), SharedData.COLOR_WHITESMOKE);
+        float textWidth = nameFont.getWidth(player1.getName());
+        nameFont.drawString(SharedData.SCREEN_WIDTH - 40.0f - textWidth, 16.0f, player1.getName(), SharedData.COLOR_WHITESMOKE);
+
+        textWidth = goalFont.getWidth(Integer.toString(goal));
+        goalFont.drawString((float) SharedData.SCREEN_WIDTH / 2 - textWidth / 2, 7f, Integer.toString(goal), SharedData.COLOR_BLACK);
+
+        textWidth = goalFont.getWidth(Integer.toString(player1.getScore()));
+        scoreFont.drawString((float) SharedData.SCREEN_WIDTH / 2 - textWidth / 2 - 34, 31f, Integer.toString(player1.getScore()), SharedData.COLOR_WHITESMOKE);
+
+        textWidth = goalFont.getWidth(Integer.toString(player2.getScore()));
+        scoreFont.drawString((float) SharedData.SCREEN_WIDTH / 2 - textWidth / 2 + 18, 31f, Integer.toString(player2.getScore()), SharedData.COLOR_WHITESMOKE);
+
+        if (gameState == SharedData.GAME_STATE_PAUSE) {
+            pauseUI.draw();
+        }
     }
 
     void playerScored(Player winnerPlayer, Player loserPlayer) {
@@ -100,14 +127,8 @@ public class GameController {
 
         ball.setTouchEnabled(false);
 
-        if (winnerPlayer.getScore() >= 10) {
-            gameState = SharedData.GAME_STATE_PAUSE_GAME_END;
-        } else {
-            gameState = SharedData.GAME_STATE_PAUSE_GOAL;
-
-            winnerPlayer.getSprite().stop();
-            loserPlayer.getSprite().stop();
-        }
+        if (winnerPlayer.getScore() >= goal) gameState = SharedData.GAME_STATE_PAUSE_GAME_END;
+        else gameState = SharedData.GAME_STATE_PAUSE_GOAL;
 
         lastPauseTime = System.currentTimeMillis();
     }
@@ -167,33 +188,6 @@ public class GameController {
             }
             case SharedData.GAME_STATE_PAUSE_GAME_END:
                 break;
-        }
-    }
-
-    void drawBattleUI() {
-        battleUI.draw();
-        lGoalUI.draw();
-        rGoalUI.draw();
-
-        TrueTypeFont nameFont = SharedResources.getInstance().BATTLE_UI_NAME;
-        TrueTypeFont goalFont = SharedResources.getInstance().BATTLE_UI_GOAL;
-        TrueTypeFont scoreFont = SharedResources.getInstance().BATTLE_UI_SCORE;
-
-        nameFont.drawString(40.0f, 16.0f, player2.getName(), SharedData.COLOR_WHITESMOKE);
-        float textWidth = nameFont.getWidth(player1.getName());
-        nameFont.drawString(SharedData.SCREEN_WIDTH - 40.0f - textWidth, 16.0f, player1.getName(), SharedData.COLOR_WHITESMOKE);
-
-        textWidth = goalFont.getWidth(Integer.toString(goal));
-        goalFont.drawString((float) SharedData.SCREEN_WIDTH / 2 - textWidth / 2, 7f, Integer.toString(goal), SharedData.COLOR_BLACK);
-
-        textWidth = goalFont.getWidth(Integer.toString(player1.getScore()));
-        scoreFont.drawString((float) SharedData.SCREEN_WIDTH / 2 - textWidth / 2 - 34, 31f, Integer.toString(player1.getScore()), SharedData.COLOR_WHITESMOKE);
-
-        textWidth = goalFont.getWidth(Integer.toString(player2.getScore()));
-        scoreFont.drawString((float) SharedData.SCREEN_WIDTH / 2 - textWidth / 2 + 18, 31f, Integer.toString(player2.getScore()), SharedData.COLOR_WHITESMOKE);
-
-        if (gameState == SharedData.GAME_STATE_PAUSE) {
-            pauseUI.draw();
         }
     }
 }

@@ -2,6 +2,8 @@ package com.ciderBrewers.core;
 
 import com.ciderBrewers.core.Shared.SharedData;
 import com.ciderBrewers.core.States.GameState;
+import com.ciderBrewers.core.States.SelectorState;
+import com.ciderBrewers.core.States.TitleState;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -24,7 +26,7 @@ public class VolleyballGame extends StateBasedGame {
         try {
             AppGameContainer app;
             app = new AppGameContainer(new VolleyballGame("Totally Wicked Volleyball"));
-            app.setIcon("data/spr/ball/fat.png");
+            app.setIcon("data/sprites/ball/fat.png");
             app.setDisplayMode(SharedData.SCREEN_WIDTH, SharedData.SCREEN_HEIGHT, false);
             app.setAlwaysRender(true);
             app.setVSync(true);
@@ -39,6 +41,8 @@ public class VolleyballGame extends StateBasedGame {
 
     @Override
     public void initStatesList(GameContainer gameContainer) {
+        addState(new TitleState());
+        addState(new SelectorState());
         addState(new GameState());
     }
 }
